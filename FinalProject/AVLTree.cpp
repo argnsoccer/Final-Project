@@ -54,7 +54,8 @@ void AVLTree::doubleWithLeftChild(AVLNode*& k3)
     rotateWithRightChild(k3->left);
     rotateWithLeftChild(k3);
 }
-void AVLTree::doubleWithRightChild
+
+void AVLTree::doubleWithRightChild(AVLNode*& k3)
 {
     rotateWithLeftChild(k3->left);
     rotateWithRightChild(k3);
