@@ -1,6 +1,8 @@
 #ifndef AVLTREE_H
 #define AVLTREE_H
 #include "AVLNode.h"
+#include <string>
+using namespace std;
 
 class AVLTree
 {
@@ -13,7 +15,7 @@ class AVLTree
 
     public:
         AVLTree();
-        void insert(int);
+        void insert(string, int, AVLNode*);
 };
 
 #endif // AVLTREE_H

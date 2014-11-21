@@ -6,10 +6,10 @@ AVLTree::AVLTree()
 }
 
 
-void AVLTree::insert(int val, AVLNode* &t)
+void AVLTree::insert(string& word,int page, AVLNode* &t)
 {
     if(t==nullptr)
-        t = new AVLNode(val, nullptr, nullptr);
+        t = new AVLNode(word, page, nullptr);
     else if(val < t->element)
     {
         insert(val, t->left);
