@@ -19,7 +19,7 @@ public:
 
 private:
     file<> *inputFile;
-    xml_node<> *parentNode;
+    xml_node<> *curNode;
 
 
 };

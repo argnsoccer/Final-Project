@@ -9,9 +9,18 @@ string Parser::parse(char *fileName)
     xml_document<> doc;
     inputFile = new file<>(fileName);
     doc.parse<0>((*inputFile).data());
-    parentNode = doc.first_node()->first_node();
-    parentNode = parentNode->next_sibling("page"); //goes to first <page> marking
-    cout << parentNode->name() << endl;
+    curNode = doc.first_node()->first_node();
+    curNode = curNode->next_sibling("page"); //goes to first <page> marking
+    curNode = curNode->next_sibling("page");
+    curNode = curNode->next_sibling("page");
+    while(curNode != nullptr)
+    {
+        cout << "firstNode: " << curNode->first_node()->value() << endl;
+        curNode = curNode->first_node();
+        curNode = curNode->first_node();
+        curNode = curNode->next_sibling("text");
+        cout << "nextSibling: " << curNode->next_sibling()->value() << endl;
+    }
 
 
 
