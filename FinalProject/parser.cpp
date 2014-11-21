@@ -9,7 +9,7 @@ string Parser::parse(char *fileName)
     xml_document<> doc;
     inputFile = new file<>(fileName);
     doc.parse<0>((*inputFile).data());
-    parentNode = new xml_node(doc.first_node(0));
+    parentNode = new xml_node<string>(doc.first_node(0));
     doc.first_node(0)->first_node(0)->next_sibling("page"); //goes to first <page> marking
 
 
