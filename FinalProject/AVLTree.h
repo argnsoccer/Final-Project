@@ -9,13 +9,18 @@ class AVLTree
 
     private:
         AVLNode* root;
-        void insert(int val, AVLNode* t);
-        int height(AVLNode* t){if(t==nullptr){return -1;}else{return height;};
+        int treeHeight;
 
 
     public:
         AVLTree();
-        void insert(string, int, AVLNode*);
+        void insert(string& s, int i, AVLNode* &k);
+        void rotateWithLeftChild(AVLNode* &k);
+        void rotateWithRightChild(AVLNode* &k);
+        void doubleWithLeftChild(AVLNode* &k);
+        void doubleWithRightChild(AVLNode* &k);
+        int height(AVLNode* t);
+
 };
 
-#endif // AVLTREE_H
+#endif //AVLTREE_H

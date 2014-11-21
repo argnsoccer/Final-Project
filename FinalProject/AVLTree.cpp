@@ -5,32 +5,43 @@ AVLTree::AVLTree()
 
 }
 
+int AVLTree::height(AVLNode *t)
+{
+    if(t==nullptr)
+    {
+        return -1;
+    }
+    else
+    {
+        return treeHeight;
+    }
+}
 
 void AVLTree::insert(string& word,int page, AVLNode* &t)
 {
     if(t==nullptr)
-        t = new AVLNode(word, page, nullptr);
-    else if(val < t->element)
+        t = new AVLNode(word, page, nullptr, nullptr);
+    else if(page < t->element)
     {
-        insert(val, t->left);
+        insert(word, page, t->left);
         if((height(t->left) - height(t->right)) == 2)
         {
-            if(val < t->left->element())  //case1
+            if(page < (t->left->element))  //case1
                 rotateWithLeftChild(t);
             else					  //case2
                 doubleWithLeftChild(t);
         }
 
     }
-    else if(t->element < val)
+    else if(t->element < page)
     {
-        insert(val, t->right);
+        insert(word, page, t->right);
         if(height(t->right)-height(t->left) == 2)
         {
-            if(val > t->right->element)
-                rotateWithRightChild(t);
+            if(page > t->right->element)
+                rotateWithRightChild(t);//case 4
             else
-                doubleWithRightChild(t);
+                doubleWithRightChild(t);//case 3
         }
     }
     t->height = max(height(t->left),height(t->right))+1;
@@ -49,7 +60,12 @@ void AVLTree::rotateWithLeftChild(AVLNode* &k1)   //k1 node above alpha
 
 }
 
-void AVLTree::doubleWithLeftChild(AVLNode*& k3)
+void AVLTree::rotateWithRightChild(AVLNode* &k)
+{
+
+}
+
+void AVLTree::doubleWithLeftChild(AVLNode* &k3)
 {
     rotateWithRightChild(k3->left);
     rotateWithLeftChild(k3);

@@ -12,12 +12,12 @@ class AVLNode
         string word;
         AVLNode* left;
         AVLNode* right;
-        AVLNode(string word, int theElem, AVLNode* l, AVLNode*r, int h = 0):word(word), element(theElem), left(l), right(r), height(h){}
         friend class AVLTree;
 
 
 public:
     AVLNode();
+    AVLNode(string word, int theElem, AVLNode* l, AVLNode*r, int h = 0):word(word), element(theElem), left(l), right(r), height(h){}
 };
 
 #endif // AVLNODE_H
