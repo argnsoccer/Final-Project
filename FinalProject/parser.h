@@ -5,6 +5,7 @@
 #include "AVLTree.h"
 #include <string>
 #include <iostream>
+#include <cstring>
 
 using namespace rapidxml;
 using namespace std;
@@ -21,7 +22,7 @@ public:
 private:
     file<> *inputFile;
     xml_node<> *curNode;
-    AVLTree index;
+    AVLTree AVLindex;
 
 };
 
