@@ -1,7 +1,9 @@
 #include "parser.h"
+#include "AVLTree.h"
 
 Parser::Parser()
 {
+    AVLTree index;
 }
 
 string Parser::parse(char *fileName)
@@ -9,17 +11,21 @@ string Parser::parse(char *fileName)
     xml_document<> doc;
     inputFile = new file<>(fileName);
     doc.parse<0>((*inputFile).data());
-    curNode = doc.first_node()->first_node();
-    curNode = curNode->next_sibling("page"); //goes to first <page> marking
-    curNode = curNode->next_sibling("page");
-    curNode = curNode->next_sibling("page");
-    while(curNode != nullptr)
+    curNode = doc.first_node()->first_node("page");//goes to first <page> marking
+    xml_node<>* titleNode;
+    int page = 1;
+    for(int i = 0; i < 1000; ++i)
     {
-        cout << "firstNode: " << curNode->first_node()->value() << endl;
-        curNode = curNode->first_node();
-        curNode = curNode->first_node();
-        curNode = curNode->next_sibling("text");
-        cout << "nextSibling: " << curNode->next_sibling()->value() << endl;
+        titleNode = curNode->first_node("title");
+        while(titleNode != nullptr)
+        {
+            cout << "tile: " << titleNode->value() << endl;
+            cout << "text: " << titleNode->next_sibling("revision")->first_node("text")->value() << endl;
+            titleNode = titleNode->next_sibling("title");
+
+        }
+        curNode = curNode->next_sibling("page");
+        page++;
     }
 
 

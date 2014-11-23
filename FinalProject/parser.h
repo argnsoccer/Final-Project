@@ -2,6 +2,7 @@
 #define PARSER_H
 #include "rapidxml.hpp"
 #include "rapidxml_utils.hpp"
+#include "AVLTree.h"
 #include <string>
 #include <iostream>
 
@@ -20,7 +21,7 @@ public:
 private:
     file<> *inputFile;
     xml_node<> *curNode;
-
+    AVLTree index;
 
 };
 
