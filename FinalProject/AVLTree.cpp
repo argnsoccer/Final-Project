@@ -17,28 +17,28 @@ int AVLTree::height(AVLNode *t)
     }
 }
 
-void AVLTree::insert(string& word, int page, AVLNode* &t)
+void AVLTree::insert(string& word, int page, AVLNode* t)
 {
     if(t==nullptr)
         t = new AVLNode(word, page, nullptr, nullptr);
-    else if(strcmp(word, t->word) < 0)
+    else if(word < t->word)
     {
         insert(word, page, t->left);
         if((height(t->left) - height(t->right)) == 2)
         {
-            if(strcmp(word,(t->left->word)) < 0)  //case1
+            if(word < (t->left->word))  //case1
                 rotateWithLeftChild(t);
             else					  //case2
                 doubleWithLeftChild(t);
         }
 
     }
-    else if(strcmp(t->word, word) < 0)
+    else if((t->word) < word)
     {
         insert(word, page, t->right);
         if(height(t->right)-height(t->left) == 2)
         {
-            if(strcmp(word,t->right->word) > 0)
+            if(word > (t->right->word))
                 rotateWithRightChild(t);//case 4
             else
                 doubleWithRightChild(t);//case 3

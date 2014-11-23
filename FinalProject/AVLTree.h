@@ -32,13 +32,13 @@ class AVLTree
 
     public:
         AVLTree();
-        void insert(string& s, int i, AVLNode *&k);
+        void insert(string& s, int i, AVLNode *k);
         void rotateWithLeftChild(AVLNode* &k);
         void rotateWithRightChild(AVLNode* &k);
         void doubleWithLeftChild(AVLNode* &k);
         void doubleWithRightChild(AVLNode* &k);
         int height(AVLNode* t);
-        AVLNode* getRoot();
+        AVLNode *getRoot();
 
 };
 

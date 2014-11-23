@@ -2,6 +2,7 @@
 #define PARSER_H
 #include "rapidxml.hpp"
 #include "rapidxml_utils.hpp"
+#include "english_stem.h"
 #include "AVLTree.h"
 #include <string>
 #include <iostream>
