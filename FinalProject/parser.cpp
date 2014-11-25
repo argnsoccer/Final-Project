@@ -13,6 +13,7 @@ string Parser::parse(char *fileName)
     doc.parse<0>((*inputFile).data());
     char* start;
     char* endWord;
+    bool stopWord;
     curNode = doc.first_node()->first_node("page");//goes to first <page> marking
     xml_node<>* titleNode;
     int page = 1;
@@ -29,11 +30,15 @@ string Parser::parse(char *fileName)
             while(endWord != nullptr)
             {
                 string inputWord(start, endWord);
-                Stemmer(inputWord);
-                cout << "inputWord: " << inputWord << endl;
+                //Stemmer(inputWord);
                 start = endWord+1;
                 endWord = strchr(start,' ');
-                AVLindex.insert(inputWord, page, AVLindex.getRoot());
+                stopWord = removeStopWords(inputWord);
+                if(stopWord == false)
+                {
+                    AVLindex.insert(inputWord, page, AVLindex.getRoot());
+                    cout << "inputWord: " << inputWord << endl;
+                }
             }
             titleNode = titleNode->next_sibling("title");
 
@@ -43,7 +48,28 @@ string Parser::parse(char *fileName)
     }
 }
 
-string removeStopWords()
+bool Parser::removeStopWords(string& word)
+{
+    ifstream fileReader;
+    set<string> StopWords;
+    string temp;
+    fileReader.open("stopwords_en.txt");
+    while(fileReader.eof() == false)
+    {
+        getline(fileReader,temp);
+        StopWords.insert(temp);
+    }
+    if(StopWords.find(word) == StopWords.end())
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+
+string Parser::stem(string& word)
 {
 
 }
