@@ -6,7 +6,7 @@ Parser::Parser()
 
 }
 
-string Parser::parse(char *fileName)
+void Parser::parse(char *fileName)
 {
     xml_document<> doc;
     inputFile = new file<>(fileName);
@@ -17,7 +17,8 @@ string Parser::parse(char *fileName)
     curNode = doc.first_node()->first_node("page");//goes to first <page> marking
     xml_node<>* titleNode;
     int page = 1;
-    stemming::english_stem<string> Stemmer;
+    int stemEnd;
+    char* buffer;
     for(int i = 0; i < 50; ++i)
     {
         titleNode = curNode->first_node("title");
@@ -30,10 +31,14 @@ string Parser::parse(char *fileName)
             while(endWord != nullptr)
             {
                 string inputWord(start, endWord);
-                //Stemmer(inputWord);
+                transform(inputWord.begin(), inputWord.end(), inputWord.begin(), ::tolower);//forces to lowercase
+                inputWord.erase(std::remove_if(inputWord.begin(), inputWord.end(), ::ispunct), inputWord.end());
                 start = endWord+1;
                 endWord = strchr(start,' ');
-                stopWord = removeStopWords(inputWord);
+                buffer = const_cast<char*>(inputWord.c_str());//casts as non-const to pass in
+                stemEnd = stem(buffer, 0, inputWord.length());//gets the end of the new string
+                inputWord = inputWord.substr(0, stemEnd);//creates a new truncated string
+                stopWord = removeStopWords(inputWord);//removes if stop word
                 if(stopWord == false)
                 {
                     AVLindex.insert(inputWord, page, AVLindex.getRoot());
@@ -69,7 +74,7 @@ bool Parser::removeStopWords(string& word)
     }
 }
 
-string Parser::stem(string& word)
+string Parser::stemWord(string& word)
 {
 
 }
