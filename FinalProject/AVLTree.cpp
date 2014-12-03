@@ -17,6 +17,22 @@ int AVLTree::height(AVLNode *t)
     }
 }
 
+bool AVLTree::preorderSearch(int page, AVLNode* k, string& searchWord)
+{
+    if(k == nullptr)
+    {
+        return false;
+    }
+    if(k->word == searchWord)
+    {
+        k->pages.push_back(page);
+        return true;
+    }
+    preorderSearch(page, k->left, searchWord);
+    preorderSearch(page, k->right, searchWord);
+    return false;
+}
+
 void AVLTree::insert(string& word, int page, AVLNode* t)
 {
     if(t==nullptr)
@@ -31,7 +47,6 @@ void AVLTree::insert(string& word, int page, AVLNode* t)
             else					  //case2
                 doubleWithLeftChild(t);
         }
-
     }
     else if((t->word) < word)
     {
@@ -45,7 +60,6 @@ void AVLTree::insert(string& word, int page, AVLNode* t)
         }
     }
     t->height = max(height(t->left),height(t->right))+1;
-
 }
 
 void AVLTree::rotateWithLeftChild(AVLNode* &k1)   //k1 node above alpha
@@ -56,8 +70,6 @@ void AVLTree::rotateWithLeftChild(AVLNode* &k1)   //k1 node above alpha
     k2->right = k1;
     k1->height = max(height(k1->left),height(k1->right))+1;
     k2->height = max(height(k2->left),height(k2->right))+1;
-
-
 }
 
 void AVLTree::rotateWithRightChild(AVLNode* &k1)
