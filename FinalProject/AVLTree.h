@@ -34,7 +34,7 @@ class AVLTree
         AVLTree();
         void insert(string& s, int i, AVLNode *k);
         void rotateWithLeftChild(AVLNode* &k);
-        void rotateWithRightChild(AVLNode* &k);
+        void rotateWithRightChild(AVLNode* &k1);
         void doubleWithLeftChild(AVLNode* &k);
         void doubleWithRightChild(AVLNode* &k);
         int height(AVLNode* t);

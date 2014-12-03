@@ -60,9 +60,13 @@ void AVLTree::rotateWithLeftChild(AVLNode* &k1)   //k1 node above alpha
 
 }
 
-void AVLTree::rotateWithRightChild(AVLNode* &k)
+void AVLTree::rotateWithRightChild(AVLNode* &k1)
 {
-
+    AVLNode* k2 = k1->right;
+    k1->right = k2->left;
+    k2->left = k1;
+    k1->height = max(height(k1->left),height(k1->right))+1;
+    k2->height = max(height(k2->left),height(k2->right))+1;
 }
 
 void AVLTree::doubleWithLeftChild(AVLNode* &k3)

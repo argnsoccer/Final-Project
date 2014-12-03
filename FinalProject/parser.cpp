@@ -24,8 +24,6 @@ void Parser::parse(char *fileName)
         titleNode = curNode->first_node("title");
         while(titleNode != nullptr)
         {
-            //cout << "tile: " << titleNode->value() << endl;
-            //cout << "text: " << titleNode->next_sibling("revision")->first_node("text")->value() << endl;
             start = titleNode->next_sibling("revision")->first_node("text")->value();
             endWord = strchr(start, ' ');
             while(endWord != nullptr)
