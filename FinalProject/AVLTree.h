@@ -32,13 +32,14 @@ class AVLTree
 
     public:
         AVLTree();
-        void insert(string& s, int i, AVLNode *k);
+        void insert(string& s, int page, AVLNode *k);
         void rotateWithLeftChild(AVLNode* &k);
         void rotateWithRightChild(AVLNode* &k1);
         void doubleWithLeftChild(AVLNode* &k);
         void doubleWithRightChild(AVLNode* &k);
         int height(AVLNode* t);
         AVLNode *getRoot();
+        bool preorderSearch(int page, AVLNode* k, string &searchWord);
 
 };
 

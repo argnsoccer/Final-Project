@@ -19,6 +19,8 @@ void Parser::parse(char *fileName)
     int page = 1;
     int stemEnd;
     char* buffer;
+    bool hasWord = false;
+    int length;
     for(int i = 0; i < 50; ++i)
     {
         titleNode = curNode->first_node("title");
@@ -30,17 +32,23 @@ void Parser::parse(char *fileName)
             {
                 string inputWord(start, endWord);
                 transform(inputWord.begin(), inputWord.end(), inputWord.begin(), ::tolower);//forces to lowercase
-                inputWord.erase(std::remove_if(inputWord.begin(), inputWord.end(), ::ispunct), inputWord.end());
+                inputWord.erase(std::remove_if(inputWord.begin(), inputWord.end(), ::ispunct), inputWord.end());//removes punctuation
                 start = endWord+1;
                 endWord = strchr(start,' ');
-                buffer = const_cast<char*>(inputWord.c_str());//casts as non-const to pass in
-                stemEnd = stem(buffer, 0, inputWord.length());//gets the end of the new string
-                inputWord = inputWord.substr(0, stemEnd);//creates a new truncated string
                 stopWord = removeStopWords(inputWord);//removes if stop word
+                buffer = const_cast<char*>(inputWord.c_str());//casts as non-const to pass in
+                length = strlen(buffer)-1;
+                stemEnd = stem(buffer, 0, length) + 1;//gets the end of the new string
+                cout << "stemEnd: " << stemEnd << endl;
+                inputWord = inputWord.substr(0, stemEnd);//creates a new truncated (stemmed) string
                 if(stopWord == false)
                 {
-                    AVLindex.insert(inputWord, page, AVLindex.getRoot());
-                    cout << "inputWord: " << inputWord << endl;
+                    hasWord = AVLindex.preorderSearch(page, AVLindex.getRoot(), inputWord);
+                    if(hasWord == false)
+                    {
+                        AVLindex.insert(inputWord, page, AVLindex.getRoot());
+                        cout << "inputWord: " << inputWord << endl;
+                    }
                 }
             }
             titleNode = titleNode->next_sibling("title");
