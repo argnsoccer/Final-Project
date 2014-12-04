@@ -14,14 +14,17 @@ public:
     void setPage(int p);
     rapidxml::xml_node<>* getPageNode();
     void setPageNode(rapidxml::xml_node<>* pgNode);
-    std::string getText();
-    void setText(std::string &text);
+    char *getText();
+    void setText(char *text);
+    char *getTitle();
+    void setTitle(char *title);
 
 
 private:
     int page;
     rapidxml::xml_node<>* pageNode;
-    std::string text;
+    char* text;
+    char* title;
 
 };
 
@@ -45,14 +48,24 @@ inline void Pages::setPageNode(rapidxml::xml_node<>* pgNode)
     this->pageNode = pgNode;
 }
 
-inline std::string Pages::getText()
+inline char* Pages::getText()
 {
     return text;
 }
 
-inline void Pages::setText(std::string& text)
+inline void Pages::setText(char* text)
 {
     this->text = text;
+}
+
+inline char* Pages::getTitle()
+{
+    return title;
+}
+
+inline void Pages::setTitle(char* t)
+{
+    this->title = t;
 }
 
 

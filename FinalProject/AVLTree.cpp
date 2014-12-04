@@ -17,21 +17,24 @@ int AVLTree::height(AVLNode *t)
     }
 }
 
-bool AVLTree::preorderSearch(int page, AVLNode *k, string& searchWord)
+bool AVLTree::search(int page, AVLNode *k, string& searchWord)
 {
     if(k == nullptr)
     {
         return false;
     }
-    if(k->word == searchWord)
+    if(searchWord < k->word)
     {
-        k->pages.push_back(page);
-        return true;
+        search(page, k->left, searchWord);
+    }
+    else if(searchWord > k->word)
+    {
+        search(page, k->right, searchWord);
     }
     else
     {
-        preorderSearch(page, k->left, searchWord);
-        preorderSearch(page, k->right, searchWord);
+        k->pages.push_back(page);
+        return true;
     }
     return false;
 }

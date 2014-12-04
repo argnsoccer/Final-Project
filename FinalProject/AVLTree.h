@@ -39,7 +39,7 @@ class AVLTree
         void doubleWithRightChild(AVLNode* &k);
         int height(AVLNode* t);
         AVLNode *getRoot();
-        bool preorderSearch(int page, AVLNode *k, string &searchWord);
+        bool search(int page, AVLNode *k, string &searchWord);
 
 };
 
