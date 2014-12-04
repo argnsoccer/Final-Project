@@ -13,6 +13,8 @@ void Parser::parse(char *fileName)
     doc.parse<0>((*inputFile).data());
     char* start;
     char* endWord;
+    char* pageStart;
+    char* pageEnd;
     bool stopWord;
     curNode = doc.first_node()->first_node("page");//goes to first <page> marking
     xml_node<>* titleNode;
@@ -26,20 +28,20 @@ void Parser::parse(char *fileName)
         titleNode = curNode->first_node("title");
         while(titleNode != nullptr)
         {
-            start = titleNode->next_sibling("revision")->first_node("text")->value();
-            endWord = strchr(start, ' ');
+            start = titleNode->next_sibling("revision")->first_node("text")->value();//takes iterator to first text in page
+//            pageStart = start;//for returning the page on search
+            pageEnd = strchr(start, '<');//goes to end of text
+            endWord = strchr(start, ' ');//gets first word
             while(endWord != nullptr)
             {
-                string inputWord(start, endWord);
-                transform(inputWord.begin(), inputWord.end(), inputWord.begin(), ::tolower);//forces to lowercase
-                inputWord.erase(std::remove_if(inputWord.begin(), inputWord.end(), ::ispunct), inputWord.end());//removes punctuation
-                start = endWord+1;
-                endWord = strchr(start,' ');
+                string inputWord(start, endWord);//creates string to be indexed
+                prepWord(inputWord);//preps the word to be indexed
+                start = endWord+1;//moves the char pointer to the start of the next word
+                endWord = strchr(start,' ');//gets the ending of the word
                 stopWord = removeStopWords(inputWord);//removes if stop word
                 buffer = const_cast<char*>(inputWord.c_str());//casts as non-const to pass in
-                length = strlen(buffer)-1;
+                length = strlen(buffer)-1;//sets to length minus 1 to be pointing to the last char
                 stemEnd = stem(buffer, 0, length) + 1;//gets the end of the new string
-                cout << "stemEnd: " << stemEnd << endl;
                 inputWord = inputWord.substr(0, stemEnd);//creates a new truncated (stemmed) string
                 if(stopWord == false)
                 {
@@ -47,7 +49,7 @@ void Parser::parse(char *fileName)
                     if(hasWord == false)
                     {
                         AVLindex.insert(inputWord, page, AVLindex.getRoot());
-                        cout << "inputWord: " << inputWord << endl;
+                        //cout << "inputWord: " << inputWord << endl;
                     }
                 }
             }
@@ -55,6 +57,11 @@ void Parser::parse(char *fileName)
 
         }
         curNode = curNode->next_sibling("page");
+        string pageText(start, pageEnd);//creates a string of all the text in one page (won't work because bigger than maxsize)
+        cout << pageText;
+        webPage.setPage(page);//sets page number
+        webPage.setText(pageText);//sets the pageText
+        pages.push_back(webPage);//adds the page to the vector of pages
         page++;
     }
 }
@@ -80,9 +87,10 @@ bool Parser::removeStopWords(string& word)
     }
 }
 
-string Parser::stemWord(string& word)
+void Parser::prepWord(string &word)
 {
-
+    word.erase(std::remove_if(word.begin(), word.end(), std::not1(std::ptr_fun(::isalnum))), word.end());
+    transform(word.begin(), word.end(), word.begin(), ::tolower);//forces to lowercase
 }
 
 
