@@ -17,7 +17,7 @@ int AVLTree::height(AVLNode *t)
     }
 }
 
-bool AVLTree::search(int page, AVLNode *k, string& searchWord)
+bool AVLTree::search(int page, string& searchWord, AVLNode *k)
 {
     if(k == nullptr)
     {
@@ -25,27 +25,29 @@ bool AVLTree::search(int page, AVLNode *k, string& searchWord)
     }
     if(searchWord < k->word)
     {
-        search(page, k->left, searchWord);
+        search(page, searchWord, k->left);
     }
     else if(searchWord > k->word)
     {
-        search(page, k->right, searchWord);
+        search(page, searchWord, k->right);
     }
-    else
+    else if(searchWord == k->word)
     {
         k->pages.push_back(page);
         return true;
     }
-    return false;
 }
 
-void AVLTree::insert(string& word, int page, AVLNode* t)
+AVLTree::AVLNode* AVLTree::insert(string& word, int page, AVLNode* t)//change the root actually
 {
     if(t==nullptr)
+    {
         t = new AVLNode(word, page, nullptr, nullptr);
+        return t;
+    }
     else if(word < t->word)
     {
-        insert(word, page, t->left);
+        t->left = insert(word, page, t->left);
         if((height(t->left) - height(t->right)) == 2)
         {
             if(word < (t->left->word))  //case1
@@ -56,7 +58,7 @@ void AVLTree::insert(string& word, int page, AVLNode* t)
     }
     else if((t->word) < word)
     {
-        insert(word, page, t->right);
+        t->right = insert(word, page, t->right);
         if(height(t->right)-height(t->left) == 2)
         {
             if(word > (t->right->word))
@@ -66,6 +68,7 @@ void AVLTree::insert(string& word, int page, AVLNode* t)
         }
     }
     t->height = max(height(t->left),height(t->right))+1;
+    return t;
 }
 
 void AVLTree::rotateWithLeftChild(AVLNode* &k1)   //k1 node above alpha

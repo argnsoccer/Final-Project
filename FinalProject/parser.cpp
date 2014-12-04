@@ -38,15 +38,15 @@ void Parser::parse(char *fileName)
             stopWord = removeStopWords(inputWord);//removes if stop word
             buffer = const_cast<char*>(inputWord.c_str());//casts as non-const to pass in
             length = strlen(buffer)-1;//sets to length minus 1 to be pointing to the last char
-            stemEnd = stem(buffer, 0, length) + 1;//gets the end of the new string
+            stemEnd = stem(buffer, 0, length);//gets the end of the new string
             inputWord = inputWord.substr(0, stemEnd);//creates a new truncated (stemmed) string
             if(stopWord == false)
             {
-                hasWord = AVLindex.search(page, AVLindex.getRoot(), inputWord);//checks to see if word is already in index
+                hasWord = AVLindex.search(page, inputWord, AVLindex.getRoot());//checks to see if word is already in index
                 if(hasWord == false)
                 {
-                    AVLindex.insert(inputWord, page, AVLindex.getRoot());
-                    cout << "inputWord: " << inputWord << endl;
+                    AVLindex.setRoot(AVLindex.insert(inputWord, page, AVLindex.getRoot()));
+//                    cout << "inputWord: " << inputWord << endl;
                 }
             }
         }

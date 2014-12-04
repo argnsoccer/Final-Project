@@ -32,20 +32,26 @@ class AVLTree
 
     public:
         AVLTree();
-        void insert(string& s, int page, AVLNode *k);
+        AVLNode *insert(string& s, int page, AVLNode *k);
         void rotateWithLeftChild(AVLNode* &k);
         void rotateWithRightChild(AVLNode* &k1);
         void doubleWithLeftChild(AVLNode* &k);
         void doubleWithRightChild(AVLNode* &k);
         int height(AVLNode* t);
         AVLNode *getRoot();
-        bool search(int page, AVLNode *k, string &searchWord);
+        AVLNode *setRoot(AVLNode* r);
+        bool search(int page, string &searchWord, AVLNode *k);
 
 };
 
 inline AVLTree::AVLNode *AVLTree::getRoot()
 {
-    return this->root;
+    return root;
+}
+
+inline AVLTree::AVLNode *AVLTree::setRoot(AVLNode *r)
+{
+    this->root = r;
 }
 
 #endif //AVLTREE_H
