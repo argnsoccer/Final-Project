@@ -1,8 +1,7 @@
-#include "parser.h"
+#include "driver.h"
 
 int main(int argc, char *argv[])
 {
-    Parser p;
-    p.parse(argv[1]);
+    Driver d(argv[1]);
 
 }

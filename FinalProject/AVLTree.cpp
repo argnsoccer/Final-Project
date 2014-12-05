@@ -38,6 +38,17 @@ bool AVLTree::search(int page, string& searchWord, AVLNode *k)
     }
 }
 
+void AVLTree::appendFile()
+{
+
+}
+
+void AVLTree::save(AVLNode*& myTree)
+{
+    AVLSaver.open("SaveFile.txt");
+
+}
+
 AVLTree::AVLNode* AVLTree::insert(string& word, int page, AVLNode* t)//change the root actually
 {
     if(t==nullptr)

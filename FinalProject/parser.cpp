@@ -6,7 +6,7 @@ Parser::Parser()
 
 }
 
-void Parser::parse(char *fileName)
+AVLTree Parser::parse(char *fileName)
 {
     xml_document<> doc;
     inputFile = new file<>(fileName);
@@ -59,6 +59,7 @@ void Parser::parse(char *fileName)
         pages.push_back(webPage);//adds the page to the vector of pages
         page++;
     }
+    return AVLindex;
 }
 
 bool Parser::removeStopWords(string& word)

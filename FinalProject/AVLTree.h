@@ -3,9 +3,11 @@
 #include <string>
 #include <vector>
 #include <cstring>
+#include <fstream>
+#include "indexer.h"
 using namespace std;
 
-class AVLTree
+class AVLTree : public Indexer
 {
 
     private:
@@ -28,11 +30,16 @@ class AVLTree
         };
         AVLNode* root;
         int treeHeight;
+        ifstream AVLLoader;
+        ofstream AVLSaver;
 
 
     public:
         AVLTree();
         AVLNode *insert(string& s, int page, AVLNode *k);
+        void save(AVLNode *&myTree);//fix this soon
+        void load();
+        void appendFile();
         void rotateWithLeftChild(AVLNode* &k);
         void rotateWithRightChild(AVLNode* &k1);
         void doubleWithLeftChild(AVLNode* &k);
