@@ -22,15 +22,16 @@ class Parser
 {
 public:
     Parser();
+    ~Parser(){delete AVLindex;}
     void prepWord(string &word);
     bool removeStopWords(string &word);
     void relevancyRanking();
-    AVLTree::AVLNode* parse(char *fileName);
+    AVLTree* parse(char *fileName);
 
 private:
     file<> *inputFile;
     xml_node<> *curNode;
-    AVLTree AVLindex;
+    AVLTree* AVLindex;
     vector<Pages> pages;
     Pages webPage;
 

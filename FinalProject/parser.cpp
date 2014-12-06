@@ -6,7 +6,7 @@ Parser::Parser()
 
 }
 
-AVLTree Parser::parse(char *fileName)
+AVLTree *Parser::parse(char *fileName)
 {
     xml_document<> doc;
     inputFile = new file<>(fileName);
@@ -14,10 +14,10 @@ AVLTree Parser::parse(char *fileName)
     char* start;
     char* endWord;
     char* pageStart;
-    char* pageText;
     bool stopWord;
     curNode = doc.first_node()->first_node("page");//goes to first <page> marking
     xml_node<>* titleNode;
+    AVLindex = new AVLTree();
     int page = 1;
     int stemEnd;
     char* buffer;
@@ -42,10 +42,10 @@ AVLTree Parser::parse(char *fileName)
             inputWord = inputWord.substr(0, stemEnd);//creates a new truncated (stemmed) string
             if(stopWord == false)
             {
-                hasWord = AVLindex.search(page, inputWord, AVLindex.getRoot());//checks to see if word is already in index
+                hasWord = AVLindex->search(page, inputWord, AVLindex->getRoot());//checks to see if word is already in index
                 if(hasWord == false)
                 {
-                    AVLindex.setRoot(AVLindex.insert(inputWord, page, AVLindex.getRoot()));
+                    AVLindex->setRoot(AVLindex->insert(inputWord, page, AVLindex->getRoot()));
 //                    cout << "inputWord: " << inputWord << endl;
                 }
             }

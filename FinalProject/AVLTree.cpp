@@ -5,9 +5,9 @@ AVLTree::AVLTree()
     root = nullptr;
 }
 
-AVLTree::AVLTree(AVLTree* root)
+AVLTree::AVLTree(AVLTree* index)
 {
-    this->root = root->getRoot();
+    this->root = index->getRoot();
 }
 
 int AVLTree::height(AVLNode *t)
@@ -21,6 +21,8 @@ int AVLTree::height(AVLNode *t)
         return treeHeight;
     }
 }
+
+
 
 bool AVLTree::search(int page, string& searchWord, AVLNode *k)
 {
@@ -45,17 +47,62 @@ bool AVLTree::search(int page, string& searchWord, AVLNode *k)
 
 void AVLTree::appendFile()
 {
-
+    cout << "in append file" << endl;
 }
 
 void AVLTree::clearFile()
 {
+    cout << "in clear file" << endl;
+}
+
+void AVLTree::save()
+{
+    AVLSaver.open("SaveFile.txt");
+    saveToFile(root, AVLSaver);
 
 }
 
-void AVLTree::save(AVLNode*& myTree)
+void AVLTree::saveToFile(AVLTree::AVLNode* root, ofstream& AVLSaver)
 {
-    AVLSaver.open("SaveFile.txt");
+    if(root != nullptr)
+    {
+        AVLSaver << root->getWord() << endl;
+        for(int i = 0; i < root->pages.size(); ++i)
+        {
+            AVLSaver << root->getPage(i) << " " << endl;
+        }
+        saveToFile(root->left, AVLSaver);
+        saveToFile(root->right, AVLSaver);
+    }
+}
+
+void AVLTree::load()
+{
+    AVLLoader.open("SaveFile.txt");
+    loadToFile(AVLLoader);
+}
+
+void AVLTree::loadToFile(ifstream& AVLLoader)
+{
+    string word; int page;
+    AVLTree* t = new AVLTree();
+    while(AVLLoader >> word)
+    {
+        AVLLoader.get();//gets \n
+        AVLLoader >> page;
+        t.insert(word, page, root);
+        AVLLoader.get();//gets the ' '
+        for(int i = 1; i < root->pages.size(); ++i)
+        {
+            root->setPage(i);
+            AVLLoader.get();//get the ' '
+        }
+    }
+}
+
+void AVLTree::searchFile(string &word)
+{
+    cout << "in searchFile" << endl;
 
 }
 
