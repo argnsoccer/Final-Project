@@ -5,6 +5,11 @@ AVLTree::AVLTree()
     root = nullptr;
 }
 
+AVLTree::AVLTree(AVLTree* root)
+{
+    this->root = root->getRoot();
+}
+
 int AVLTree::height(AVLNode *t)
 {
     if(t==nullptr)
@@ -39,6 +44,11 @@ bool AVLTree::search(int page, string& searchWord, AVLNode *k)
 }
 
 void AVLTree::appendFile()
+{
+
+}
+
+void AVLTree::clearFile()
 {
 
 }

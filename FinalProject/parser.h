@@ -25,7 +25,7 @@ public:
     void prepWord(string &word);
     bool removeStopWords(string &word);
     void relevancyRanking();
-    void parse(char *fileName);
+    AVLTree::AVLNode* parse(char *fileName);
 
 private:
     file<> *inputFile;

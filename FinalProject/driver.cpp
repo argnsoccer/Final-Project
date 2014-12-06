@@ -3,7 +3,9 @@
 Driver::Driver(char *fileName)
 {
     int inputCommand;
-    i = p.parse(fileName);
+    i = new AVLTree(p.parse(fileName));
+    i.save();
+    i.load();
     cout << "Which mode would you like to be in? (Please only integer answers)" << endl;
     cout << "1: Maintenance Mode \n 2: Interactive Mode " << endl;
     cin >> inputCommand;
@@ -11,14 +13,12 @@ Driver::Driver(char *fileName)
     {
         //Maintenance Mode
         case 1:
-
-
-            i.save();
+            i.clearIndex();
+            i.appendFile();
 
         //Interactive Mode
         case 2:
 
-            i.append();
     }
 
 }

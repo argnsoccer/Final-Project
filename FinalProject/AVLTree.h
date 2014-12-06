@@ -36,6 +36,7 @@ class AVLTree : public Indexer
 
     public:
         AVLTree();
+        AVLTree(AVLTree *root);
         AVLNode *insert(string& s, int page, AVLNode *k);
         void save(AVLNode *&myTree);//fix this soon
         void load();
