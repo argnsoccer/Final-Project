@@ -40,7 +40,22 @@ bool AVLTree::search(int page, string& searchWord, AVLNode *k)
     }
     else if(searchWord == k->word)
     {
-        k->pages.push_back(page);
+
+        if(k->pages.size() == 0)
+        {
+            k->pages.push_back(page);
+        }
+        for(int i = 0; i < k->pages.size(); ++i)
+        {
+            if(page == k->pages[i])
+            {
+                k->occurrences.push_back(i+1);
+            }
+            else
+            {
+                k->pages.push_back(page);
+            }
+        }
         return true;
     }
 }
@@ -69,8 +84,10 @@ void AVLTree::saveToFile(AVLTree::AVLNode* root, ofstream& AVLSaver)
         AVLSaver << root->getWord() << endl;
         for(int i = 0; i < root->pages.size(); ++i)
         {
-            AVLSaver << root->getPage(i) << " " << endl;
+            AVLSaver << root->getPage(i) << " ";
+            //AVLSaver << "(" << root->getOccurrences(i) << ") ";
         }
+        AVLSaver << endl;
         saveToFile(root->left, AVLSaver);
         saveToFile(root->right, AVLSaver);
     }
@@ -85,12 +102,11 @@ void AVLTree::load()
 void AVLTree::loadToFile(ifstream& AVLLoader)
 {
     string word; int page;
-    AVLTree* t = new AVLTree();
     while(AVLLoader >> word)
     {
         AVLLoader.get();//gets \n
         AVLLoader >> page;
-        t.insert(word, page, root);
+        insert(word, page, root);
         AVLLoader.get();//gets the ' '
         for(int i = 1; i < root->pages.size(); ++i)
         {
@@ -100,7 +116,7 @@ void AVLTree::loadToFile(ifstream& AVLLoader)
     }
 }
 
-void AVLTree::searchFile(string &word)
+Pages AVLTree::searchFile(string &word)
 {
     cout << "in searchFile" << endl;
 

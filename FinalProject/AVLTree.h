@@ -16,6 +16,7 @@ class AVLTree : public Indexer
         {
             int height;
             vector<int> pages;
+            vector<int> occurrences;
             string word;
             AVLNode* left;
             AVLNode* right;
@@ -25,6 +26,7 @@ class AVLTree : public Indexer
             int getHeight(){return height;}
             void setPage(int elem){this->pages.push_back(elem);}
             int getPage(int i){return pages[i];}
+            int getOccurrences(int i){return occurrences[i];}
             string getWord(){return word;}
             void setWord(string w){this->word = w;}
 
@@ -53,6 +55,7 @@ class AVLTree : public Indexer
         int height(AVLNode* t);
         AVLNode *getRoot();
         AVLNode *setRoot(AVLNode* r);
+
         bool search(int page, string &searchWord, AVLNode *k);
 
 };

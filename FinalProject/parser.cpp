@@ -46,7 +46,7 @@ AVLTree *Parser::parse(char *fileName)
                 if(hasWord == false)
                 {
                     AVLindex->setRoot(AVLindex->insert(inputWord, page, AVLindex->getRoot()));
-//                    cout << "inputWord: " << inputWord << endl;
+                  //cout << "inputWord: " << inputWord << endl;
                 }
             }
         }
