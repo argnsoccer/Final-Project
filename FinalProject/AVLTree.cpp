@@ -152,7 +152,6 @@ void AVLTree::loadFromFile(ifstream& AVLLoader)
             }
         }
         AVLLoader.get();//gets the \n
-
         root = insert(word, root, tempPages, tempOcc);
         tempPages.clear();
         tempPages.shrink_to_fit();
@@ -161,10 +160,43 @@ void AVLTree::loadFromFile(ifstream& AVLLoader)
     }
 }
 
-Pages AVLTree::searchFile(string &word)
+vector<Pages> AVLTree::searchFile(string &word, Parser &p)
 {
     cout << "in searchFile" << endl;
+    return SearchFileHelper(word, root, p);
+}
 
+vector<Pages> AVLTree::searchFileHelper(string &word, AVLNode *root, Parser p)
+{
+    vector<Pages> pages = p.getPages();
+    vector<Pages> resultPages;
+    Pages page;
+    if(root == nullptr)
+    {
+        return false;
+    }
+    if(word < root->word)
+    {
+        searchFileHelper(word, root->left);
+    }
+    else if(word > root->word)
+    {
+        searchFileHelper(word, root->right);
+    }
+    else if(word == root->word)
+    {
+        for(int i = 0; i < pages.size(); ++i)
+        {
+            page = pages.at(i);
+            for(int j = 0; j < root->pages.size(); ++j)
+            {
+                if(root->pages.at(j) == page.getPage())
+                {
+                    resultPages.push_back(page);
+                }
+            }
+        }
+    }
 }
 
 AVLTree::AVLNode* AVLTree::insert(string& word, int page, AVLNode* t)//change the root actually
