@@ -22,7 +22,7 @@ class AVLTree : public Indexer
             AVLNode* left;
             AVLNode* right;
             AVLNode(string word, int page, AVLNode* left,AVLNode* right):
-                word(word), left(left), right(right){pages.push_back(page);occurrences.push_back(1);}
+                word(word), left(left), right(right){height = 0; pages.push_back(page);occurrences.push_back(1);}
             void setHeight(int height){this->height = height;}
             int getHeight(){return height;}
             void setPage(int elem){this->pages.push_back(elem);}
@@ -52,7 +52,7 @@ class AVLTree : public Indexer
         void save();
         void saveToFile(AVLNode *root, ofstream &AVLSaver);
         void load();
-        void loadToFile(ifstream& AVLLoader);
+        void loadFromFile(ifstream& AVLLoader);
         void appendFile();
         void clearIndex();
         void clear(AVLNode* root);
@@ -63,6 +63,7 @@ class AVLTree : public Indexer
         void doubleWithRightChild(AVLNode* &k);
         int height(AVLNode* t);
         AVLNode *getRoot();
+        AVLTree getStructure();
         void *setRoot(AVLNode* r);
 
         bool search(int page, string &searchWord, AVLNode *k);

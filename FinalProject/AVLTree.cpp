@@ -115,23 +115,26 @@ void AVLTree::saveToFile(AVLNode *root, ofstream& AVLSaver)
 void AVLTree::load()
 {
     AVLLoader.open("SaveFile.txt");
-    loadToFile(AVLLoader);
+    loadFromFile(AVLLoader);
 }
 
-void AVLTree::loadToFile(ifstream& AVLLoader)
+void AVLTree::loadFromFile(ifstream& AVLLoader)
 {
-    string word; int page;
-    while(AVLLoader >> word)
+    string word; int page, temp;
+    while(!AVLLoader.eof())
     {
+        AVLLoader >> word;
         AVLLoader.get();//gets \n
         AVLLoader >> page;
-        insert(word, page, root);
+        root = insert(word, page, root);
         AVLLoader.get();//gets the ' '
-        for(int i = 1; i < root->pages.size(); ++i)
+        while(AVLLoader.peek()!= '\n')
         {
-            root->setPage(i);
+            AVLLoader >> temp;
+            root->setPage(temp);
             AVLLoader.get();//get the ' '
-            root->setOccurrences(i);
+            AVLLoader >> temp;
+            root->setOccurrences(temp);
             AVLLoader.get();//get the ' '
         }
     }
@@ -148,7 +151,6 @@ AVLTree::AVLNode* AVLTree::insert(string& word, int page, AVLNode* t)//change th
     if(t==nullptr)
     {
         t = new AVLNode(word, page, nullptr, nullptr);
-        //t->getInfo(0);
         return t;
     }
     else if(word < t->word)

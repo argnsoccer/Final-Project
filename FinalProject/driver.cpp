@@ -24,10 +24,10 @@ Driver::Driver(char *fileName)
         }
         else
         {
+            cout << "You entered an incorrect command. Please try again." << endl;
             saver = false;
         }
     }
-    bool cleared = false;
     bool looper=false;
     while(looper == false)
     {
@@ -51,7 +51,6 @@ Driver::Driver(char *fileName)
                 {
                 case 1:
                     i->clearIndex();
-                    cleared = true;
                     break;
 
                 case 2:
@@ -71,8 +70,9 @@ Driver::Driver(char *fileName)
         //Interactive Mode
         case 2:
         {
-            cout << "Index loaded into AVLTree for you. Sorry for the lack of variety...and speed." << endl;
+            cout << "Index loading into AVLTree for you. Please Wait." << endl;
             i->load();
+            cout << "Loading complete." << endl;
             break;
         }
 
