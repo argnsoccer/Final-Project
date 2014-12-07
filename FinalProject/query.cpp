@@ -9,9 +9,21 @@ Query::Query()
 
 }
 
-void Query::run()
+void Query::run(Indexer *i, vector<Pages> &pages)
 {
+    getSearchWords();
+    vector<Pages> resultPages;
+    resultPages = i->searchFile(words.at(0), pages);
 
+//      for(int i = 0; i < words.size(); i++) //display contents of vector
+//      {
+//          cout <<"at "<< i << ":" <<words.at(i) << endl;
+//      }
+
+}
+
+void Query::getSearchWords()
+{
     cout << "enter shit here: ";
     getline(cin,str);
 
@@ -28,12 +40,6 @@ void Query::run()
     }
 
     delete[] cstr;
-
-//      for(int i = 0; i < words.size(); i++) //display contents of vector
-//      {
-//          cout <<"at "<< i << ":" <<words.at(i) << endl;
-//      }
-
 }
 
 bool Query::checkSingleWord(string temp)

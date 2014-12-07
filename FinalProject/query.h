@@ -5,13 +5,14 @@
 #include <cstring>
 #include <vector>
 
+#include "indexer.h"
 using namespace std;
 
 class Query
 {
 public:
     Query();
-    void run();
+    void run(Indexer *i, vector<Pages> &pages);
 
 private:
     string str;
@@ -19,6 +20,7 @@ private:
     bool checkSingleWord(string temp);
     bool checkOpp(string temp);
     string getNextWord();
+    void getSearchWords();
 
 };
 
