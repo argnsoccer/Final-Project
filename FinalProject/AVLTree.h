@@ -26,6 +26,7 @@ class AVLTree : public Indexer
             void setHeight(int height){this->height = height;}
             int getHeight(){return height;}
             void setPage(int elem){this->pages.push_back(elem);}
+            void setOccurrences(int elem){this->occurrences.push_back(elem);}
             string getWord(){return word;}
             void getInfo(int i)
             {

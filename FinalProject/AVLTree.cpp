@@ -113,6 +113,8 @@ void AVLTree::loadToFile(ifstream& AVLLoader)
         {
             root->setPage(i);
             AVLLoader.get();//get the ' '
+            root->setOccurrences(i);
+            AVLLoader.get();//get the ' '
         }
     }
 }
