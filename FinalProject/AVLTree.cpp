@@ -40,24 +40,23 @@ bool AVLTree::search(int page, string& searchWord, AVLNode *k)
     }
     else if(searchWord == k->word)
     {
-
-        if(k->pages.size() == 0)
-        {
-            k->pages.push_back(page);
-        }
         for(int i = 0; i < k->pages.size(); ++i)
         {
-            if(page == k->pages[i])
-            {
-                k->occurrences.push_back(i+1);
-            }
-            else
-            {
-                k->pages.push_back(page);
-            }
+           if(page == k->pages.at(i))
+           {
+                std::replace(k->occurrences.begin(), k->occurrences.end(), k->occurrences.at(i), (k->occurrences.at(i)+1));//increment occurrences
+                //k->getInfo(i);
+           }
+           else
+           {
+               k->pages.push_back(page);
+               k->occurrences.push_back(1);
+               //k->getInfo(i);
+           }
         }
         return true;
     }
+    return false;
 }
 
 void AVLTree::appendFile()
@@ -77,17 +76,20 @@ void AVLTree::save()
 
 }
 
-void AVLTree::saveToFile(AVLTree::AVLNode* root, ofstream& AVLSaver)
+void AVLTree::saveToFile(AVLNode *root, ofstream& AVLSaver)
 {
     if(root != nullptr)
     {
         AVLSaver << root->getWord() << endl;
         for(int i = 0; i < root->pages.size(); ++i)
         {
-            AVLSaver << root->getPage(i) << " ";
-            //AVLSaver << "(" << root->getOccurrences(i) << ") ";
+            AVLSaver << root->pages.at(i) << " ";
+            //cout << root->pages.at(i) << " ";
+            AVLSaver << "(" << root->occurrences.at(i) << ") ";
+            //cout << "(" << root->occurrences.at(i) << ") ";
         }
         AVLSaver << endl;
+        //cout << endl;
         saveToFile(root->left, AVLSaver);
         saveToFile(root->right, AVLSaver);
     }
