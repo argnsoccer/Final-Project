@@ -47,7 +47,7 @@ bool AVLTree::search(int page, string& searchWord, AVLNode *k)
             {
                 k->occurrences.at(i) = k->occurrences.at(i) + 1;//increment occurrences
                 flag = true;
-                k->getInfo(i);
+                //k->getInfo(i);
                 break;
             }
         }
@@ -69,15 +69,12 @@ void AVLTree::appendFile()
 void AVLTree::clearIndex()
 {
     clear(root);
+    cout << "Index has been cleared." << endl;
 }
 
 void AVLTree::clear(AVLTree::AVLNode* root)
 {
     AVLTree::AVLNode* temp;
-    if(root == nullptr)
-    {
-        cout << "AVLTree is empty. Please stop trying to break me." << endl;
-    }
     if(root != nullptr)
     {
         clear(root->left);
@@ -105,7 +102,7 @@ void AVLTree::saveToFile(AVLNode *root, ofstream& AVLSaver)
         {
             AVLSaver << root->pages.at(i) << " ";
             //cout << root->pages.at(i) << " ";
-            AVLSaver << "(" << root->occurrences.at(i) << ") ";
+            AVLSaver << root->occurrences.at(i) << " ";
             //cout << "(" << root->occurrences.at(i) << ") ";
         }
         AVLSaver << endl;

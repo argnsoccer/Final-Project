@@ -63,7 +63,7 @@ class AVLTree : public Indexer
         void doubleWithRightChild(AVLNode* &k);
         int height(AVLNode* t);
         AVLNode *getRoot();
-        AVLNode *setRoot(AVLNode* r);
+        void *setRoot(AVLNode* r);
 
         bool search(int page, string &searchWord, AVLNode *k);
 
@@ -74,7 +74,7 @@ inline AVLTree::AVLNode *AVLTree::getRoot()
     return root;
 }
 
-inline AVLTree::AVLNode *AVLTree::setRoot(AVLNode *r)
+inline void *AVLTree::setRoot(AVLNode *r)
 {
     this->root = r;
 }
