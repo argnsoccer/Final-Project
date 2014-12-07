@@ -63,9 +63,27 @@ void AVLTree::appendFile()
     cout << "in append file" << endl;
 }
 
-void AVLTree::clearFile()
+void AVLTree::clearIndex()
 {
-    cout << "in clear file" << endl;
+    clear(root);
+}
+
+void AVLTree::clear(AVLTree::AVLNode* root)
+{
+    AVLTree::AVLNode* temp;
+    if(root == nullptr)
+    {
+        cout << "AVLTree is empty. Please stop trying to break me." << endl;
+    }
+    if(root != nullptr)
+    {
+        clear(root->left);
+        clear(root->right);
+        temp = root;
+        free(temp);
+        root = nullptr;
+    }
+
 }
 
 void AVLTree::save()
@@ -130,6 +148,7 @@ AVLTree::AVLNode* AVLTree::insert(string& word, int page, AVLNode* t)//change th
     if(t==nullptr)
     {
         t = new AVLNode(word, page, nullptr, nullptr);
+        t->getInfo(0);
         return t;
     }
     else if(word < t->word)

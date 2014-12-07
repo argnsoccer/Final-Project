@@ -12,7 +12,7 @@ public:
     virtual void save() = 0;
     virtual void load() = 0;
     virtual void appendFile() =0;
-    virtual void clearFile() = 0;
+    virtual void clearIndex() = 0;
     virtual Pages searchFile(std::string& word) = 0;
 
 private:

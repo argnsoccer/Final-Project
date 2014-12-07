@@ -54,7 +54,8 @@ class AVLTree : public Indexer
         void load();
         void loadToFile(ifstream& AVLLoader);
         void appendFile();
-        void clearFile();
+        void clearIndex();
+        void clear(AVLNode* root);
         Pages searchFile(string &word);
         void rotateWithLeftChild(AVLNode* &k);
         void rotateWithRightChild(AVLNode* &k1);
