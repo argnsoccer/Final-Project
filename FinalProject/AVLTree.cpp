@@ -122,27 +122,35 @@ void AVLTree::load()
 
 void AVLTree::loadFromFile(ifstream& AVLLoader)
 {
+    vector<int> tempPages;
+    vector<int> tempOcc;
     string word; int page, temp;
     while(!AVLLoader.eof())
     {
         AVLLoader >> word;
         AVLLoader.get();//gets \n
         AVLLoader >> page;
-        root = insert(word, page, root);
+        tempPages.push_back(page);
         AVLLoader.get();//gets the ' '
         AVLLoader >> temp;
-        root->changeFirstElemOcc(temp);
+        tempOcc.push_back(temp);
         AVLLoader.get();//gets the ' '
         while(AVLLoader.peek()!= '\n')
         {
             AVLLoader >> temp;
-            root->setPage(temp);
+            tempPages.push_back(temp);
             AVLLoader.get();//get the ' '
             AVLLoader >> temp;
-            root->setOccurrences(temp);
+            tempOcc.push_back(temp);
             AVLLoader.get();//get the ' '
         }
         AVLLoader.get();//gets the \n
+
+        root = insert(word, root, tempPages, tempOcc);
+        tempPages.clear();
+        tempPages.resize(tempPages.size());
+        tempOcc.clear();
+        tempOcc.resize(tempOcc.size());
     }
 }
 
@@ -183,6 +191,39 @@ AVLTree::AVLNode* AVLTree::insert(string& word, int page, AVLNode* t)//change th
     t->height = max(height(t->left),height(t->right))+1;
     return t;
 }
+
+AVLTree::AVLNode* AVLTree::insert(string& word, AVLNode* t, vector<int> &pages, vector<int> &occurrences)//change the root actually
+{
+    if(t==nullptr)
+    {
+        t = new AVLNode(word, nullptr, nullptr, pages, occurrences);
+    }
+    else if(word < t->word)
+    {
+        t->left = insert(word, t->left, pages, occurrences);
+        if((height(t->left) - height(t->right)) == 2)
+        {
+            if(word < (t->left->word))  //case1
+                t = rotateWithLeftChild(t);
+            else					  //case2
+                t = doubleWithLeftChild(t);
+        }
+    }
+    else if((t->word) < word)
+    {
+        t->right = insert(word, t->right, pages, occurrences);
+        if(height(t->right)-height(t->left) == 2)
+        {
+            if(word > (t->right->word))
+                t = rotateWithRightChild(t);//case 4
+            else
+                t = doubleWithRightChild(t);//case 3
+        }
+    }
+    t->height = max(height(t->left),height(t->right))+1;
+    return t;
+}
+
 
 AVLTree::AVLNode* AVLTree::rotateWithLeftChild(AVLNode* &k1)   //k1 node above alpha
 {

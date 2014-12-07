@@ -23,6 +23,17 @@ class AVLTree : public Indexer
             AVLNode* right;
             AVLNode(string word, int page, AVLNode* left,AVLNode* right):
                 word(word), left(left), right(right){height = 0; pages.push_back(page);occurrences.push_back(1);}
+
+            AVLNode(string word, AVLNode *left, AVLNode *right, vector<int> pages, vector<int> occurrences):
+                word(word), left(left), right(right)
+            {
+                for(int i = 0; i < pages.size(); ++i)
+                {
+                    this->pages.push_back(pages.at(i));
+                    this->occurrences.push_back(occurrences.at(i));
+                }
+            }
+
             void setHeight(int height){this->height = height;}
             int getHeight(){return height;}
             void setPage(int elem){this->pages.push_back(elem);}
@@ -41,7 +52,6 @@ class AVLTree : public Indexer
 
         };
         AVLNode* root;
-        int treeHeight;
         ifstream AVLLoader;
         ofstream AVLSaver;
 
@@ -50,6 +60,7 @@ class AVLTree : public Indexer
         AVLTree();
         AVLTree(AVLTree *index);
         AVLNode *insert(string& s, int page, AVLNode *k);
+        AVLNode *insert(string& s, AVLNode *k, vector<int> &pages, vector<int> &occurrences);
         void save();
         void saveToFile(AVLNode *root, ofstream &AVLSaver);
         void load();

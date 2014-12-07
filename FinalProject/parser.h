@@ -26,6 +26,7 @@ public:
     void prepWord(string &word);
     bool removeStopWords(string &word);
     void relevancyRanking();
+    vector<Pages> getPageObject();
     AVLTree* parse(char *fileName);
 
 private:
@@ -36,5 +37,10 @@ private:
     Pages webPage;
 
 };
+
+inline vector<Pages> Parser::getPageObject()
+{
+    return pages;
+}
 
 #endif // PARSER_H

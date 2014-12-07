@@ -78,6 +78,7 @@ Driver::Driver(char *fileName)
                 i->load();
                 cout << "Loading complete." << endl;
             }
+
             break;
         }
 
