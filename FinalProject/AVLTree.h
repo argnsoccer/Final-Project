@@ -29,9 +29,10 @@ class AVLTree : public Indexer
             string getWord(){return word;}
             void getInfo(int i)
             {
-                cout << "word: " << this->word << endl;
-                cout << "page at i: " << this->pages.at(i) << endl;
-                cout << "occurrences at i: " << this->occurrences.at(i) << endl;
+                cout << endl;
+                cout << "word: " << this->word << endl << endl;
+                cout << "page at i = " << i << ": " << this->pages.at(i) << endl;
+                cout << "occurrences at i = " << i << ": " << this->occurrences.at(i) << endl;
             }
 
             void setWord(string w){this->word = w;}

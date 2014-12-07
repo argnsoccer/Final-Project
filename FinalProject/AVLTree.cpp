@@ -40,19 +40,24 @@ bool AVLTree::search(int page, string& searchWord, AVLNode *k)
     }
     else if(searchWord == k->word)
     {
-        for(int i = 0; i < k->pages.size(); ++i)
+        bool flag = false;
+        int counter = 0;
+        while(page != k->pages.at(counter))
         {
-           if(page == k->pages.at(i))
-           {
-                std::replace(k->occurrences.begin(), k->occurrences.end(), k->occurrences.at(i), (k->occurrences.at(i)+1));//increment occurrences
-                //k->getInfo(i);
-           }
-           else
-           {
-               k->pages.push_back(page);
-               k->occurrences.push_back(1);
-               //k->getInfo(i);
-           }
+            if(page == k->pages.at(counter))
+            {
+                flag = true;
+            }
+            counter++;
+        }
+        if(flag == true)
+        {
+            k->occurrences.at(counter) = k->occurrences.at(counter) + 1;//increment occurrences
+        }
+        else
+        {
+            k->pages.push_back(page);
+            k->occurrences.push_back(1);
         }
         return true;
     }
@@ -129,6 +134,7 @@ AVLTree::AVLNode* AVLTree::insert(string& word, int page, AVLNode* t)//change th
     if(t==nullptr)
     {
         t = new AVLNode(word, page, nullptr, nullptr);
+        t->getInfo(0);
         return t;
     }
     else if(word < t->word)
