@@ -11,6 +11,8 @@ class Driver
 public:
     Driver(char* fileName);
     ~Driver(){delete i;}
+
+private:
     Parser p;
     Indexer* i;
 

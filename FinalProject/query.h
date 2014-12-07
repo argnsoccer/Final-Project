@@ -1,21 +1,25 @@
-//#ifndef QUERY_H
-//#define QUERY_H
+#ifndef QUERY_H
+#define QUERY_H
+#include <string>
+#include <iostream>
+#include <cstring>
+#include <vector>
 
-//class query
-//{
-//public:
-//    query();
-//    query(int& numWords, char* words);
-//    void run();
+using namespace std;
 
-//private:
-//    int count;
-//    int curr;
-//    char* wordList[];
-//    bool checkSingleWord(int count, char *words);
-//    bool checkOpp();
-//    char* getNextWord();
+class Query
+{
+public:
+    Query();
+    void run();
 
-//};
+private:
+    string str;
+    vector<string> words;
+    bool checkSingleWord(string temp);
+    bool checkOpp(string temp);
+    string getNextWord();
 
-//#endif // QUERY_H
+};
+
+#endif // QUERY_H

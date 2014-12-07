@@ -77,6 +77,18 @@ Driver::Driver(char *fileName)
                 cout << "Index loading into AVLTree for you. Please Wait." << endl;
                 i->load();
                 cout << "Loading complete." << endl;
+                load = false;
+            }
+            cout << "Would you like to enter a query?" << endl;
+            cout << "1: Yes\nAny other number to stop searching" << endl;
+            cin >> inputCommand;
+            if(inputCommand == 1)
+            {
+                //query.run();
+            }
+            else
+            {
+                //break;
             }
 
             break;

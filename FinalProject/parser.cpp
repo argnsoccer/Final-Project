@@ -15,9 +15,11 @@ AVLTree *Parser::parse(char *fileName)
     char* endWord;
     char* pageStart;
     bool stopWord;
+    cout << "before" << endl;
     curNode = doc.first_node()->first_node("page");//goes to first <page> marking
     xml_node<>* titleNode;
     AVLindex = new AVLTree();
+    cout << "after" << endl;
     int page = 1;
     int stemEnd;
     char* buffer;

@@ -24,15 +24,8 @@ class AVLTree : public Indexer
             AVLNode(string word, int page, AVLNode* left,AVLNode* right):
                 word(word), left(left), right(right){height = 0; pages.push_back(page);occurrences.push_back(1);}
 
-            AVLNode(string word, AVLNode *left, AVLNode *right, vector<int> pages, vector<int> occurrences):
-                word(word), left(left), right(right)
-            {
-                for(int i = 0; i < pages.size(); ++i)
-                {
-                    this->pages.push_back(pages.at(i));
-                    this->occurrences.push_back(occurrences.at(i));
-                }
-            }
+            AVLNode(string word, AVLNode *left, AVLNode *right, vector<int> &pages, vector<int> &occurrences):
+                word(word), left(left), right(right), pages(pages), occurrences(occurrences){}
 
             void setHeight(int height){this->height = height;}
             int getHeight(){return height;}

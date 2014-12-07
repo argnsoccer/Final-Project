@@ -127,30 +127,37 @@ void AVLTree::loadFromFile(ifstream& AVLLoader)
     string word; int page, temp;
     while(!AVLLoader.eof())
     {
-        AVLLoader >> word;
-        AVLLoader.get();//gets \n
-        AVLLoader >> page;
-        tempPages.push_back(page);
-        AVLLoader.get();//gets the ' '
-        AVLLoader >> temp;
-        tempOcc.push_back(temp);
-        AVLLoader.get();//gets the ' '
-        while(AVLLoader.peek()!= '\n')
+        int wordCheck = 0;
+        char peek = AVLLoader.peek();
+        while(peek != '\n')
         {
-            AVLLoader >> temp;
-            tempPages.push_back(temp);
-            AVLLoader.get();//get the ' '
+            if(wordCheck == 0)
+            {
+                AVLLoader >> word;
+                AVLLoader.get();//gets \n
+            }
+            AVLLoader >> page;
+            tempPages.push_back(page);
+            tempPages.shrink_to_fit();
+            AVLLoader.get();//gets the ' '
             AVLLoader >> temp;
             tempOcc.push_back(temp);
-            AVLLoader.get();//get the ' '
+            tempOcc.shrink_to_fit();
+            AVLLoader.get();//gets the ' '
+            wordCheck++;
+            peek = AVLLoader.peek();
+            if((int)peek == -1)//would not break if eof() was reached even if part of while check, so I use this break
+            {
+                break;
+            }
         }
         AVLLoader.get();//gets the \n
 
         root = insert(word, root, tempPages, tempOcc);
         tempPages.clear();
-        tempPages.resize(tempPages.size());
+        tempPages.shrink_to_fit();
         tempOcc.clear();
-        tempOcc.resize(tempOcc.size());
+        tempOcc.shrink_to_fit();
     }
 }
 
