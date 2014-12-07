@@ -27,6 +27,7 @@ class AVLTree : public Indexer
             int getHeight(){return height;}
             void setPage(int elem){this->pages.push_back(elem);}
             void setOccurrences(int elem){this->occurrences.push_back(elem);}
+            void changeFirstElemOcc(int elem){this->occurrences.pop_back();this->occurrences.push_back(elem);}
             string getWord(){return word;}
             void getInfo(int i)
             {
@@ -57,10 +58,10 @@ class AVLTree : public Indexer
         void clearIndex();
         void clear(AVLNode* root);
         Pages searchFile(string &word);
-        void rotateWithLeftChild(AVLNode* &k);
-        void rotateWithRightChild(AVLNode* &k1);
-        void doubleWithLeftChild(AVLNode* &k);
-        void doubleWithRightChild(AVLNode* &k);
+        AVLNode *rotateWithLeftChild(AVLNode* &k);
+        AVLNode *rotateWithRightChild(AVLNode* &k1);
+        AVLNode *doubleWithLeftChild(AVLNode* &k);
+        AVLNode *doubleWithRightChild(AVLNode* &k);
         int height(AVLNode* t);
         AVLNode *getRoot();
         AVLTree getStructure();

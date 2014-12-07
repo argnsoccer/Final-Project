@@ -4,6 +4,7 @@ Driver::Driver(char *fileName)
 {
     int inputCommand;
     bool saver = false;
+    bool load = true;
     while(saver == false)
     {
         cout << "Parse and save a new file or load from file?" << endl;
@@ -15,6 +16,7 @@ Driver::Driver(char *fileName)
             cout << "Index has been parsed" << endl;
             i->save();
             saver = true;
+            load = false;
         }
         else if(inputCommand == 2)
         {
@@ -70,9 +72,12 @@ Driver::Driver(char *fileName)
         //Interactive Mode
         case 2:
         {
-            cout << "Index loading into AVLTree for you. Please Wait." << endl;
-            i->load();
-            cout << "Loading complete." << endl;
+            if(load == true)
+            {
+                cout << "Index loading into AVLTree for you. Please Wait." << endl;
+                i->load();
+                cout << "Loading complete." << endl;
+            }
             break;
         }
 
