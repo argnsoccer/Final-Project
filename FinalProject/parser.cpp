@@ -15,11 +15,10 @@ AVLTree *Parser::parse(char *fileName)
     char* endWord;
     char* pageStart;
     bool stopWord;
-    cout << "before" << endl;
     curNode = doc.first_node()->first_node("page");//goes to first <page> marking
     xml_node<>* titleNode;
-    AVLindex = new AVLTree();
-    cout << "after" << endl;
+//    Index = new AVLTree();
+    AVLIndex = new AVLTree();
     int page = 1;
     int stemEnd;
     char* buffer;
@@ -44,10 +43,10 @@ AVLTree *Parser::parse(char *fileName)
             inputWord = inputWord.substr(0, stemEnd);//creates a new truncated (stemmed) string
             if(stopWord == false)
             {
-                hasWord = AVLindex->search(page, inputWord, AVLindex->getRoot());//checks to see if word is already in index
+                hasWord = AVLIndex->search(page, inputWord, AVLIndex->getRoot());//checks to see if word is already in index
                 if(hasWord == false)
                 {
-                    AVLindex->setRoot(AVLindex->insert(inputWord, page, AVLindex->getRoot()));
+                    AVLIndex->setRoot(AVLIndex->insert(inputWord, page, AVLIndex->getRoot()));
                     //cout << "inputWord: " << inputWord << endl;
                 }
             }
@@ -61,7 +60,7 @@ AVLTree *Parser::parse(char *fileName)
         pages.push_back(webPage);//adds the page to the vector of pages
         page++;
     }
-    return AVLindex;
+    return AVLIndex;
 }
 
 bool Parser::removeStopWords(string& word)

@@ -5,7 +5,6 @@
 #include <cstring>
 #include <fstream>
 #include "indexer.h"
-#include "parser.h"
 #include <iostream>
 #include <algorithm>
 using namespace std;
@@ -62,15 +61,14 @@ class AVLTree : public Indexer
         void appendFile();
         void clearIndex();
         void clear(AVLNode* root);
-        vector<Pages> searchFile(string &word);
-        vector<Pages> searchFileHelper(string& word, AVLNode* root);
+        vector<Pages> searchFile(string &word, vector<Pages> pages);
+        vector<Pages> searchFileHelper(string& word, AVLNode* root, vector<Pages> pages);
         AVLNode *rotateWithLeftChild(AVLNode* &k);
         AVLNode *rotateWithRightChild(AVLNode* &k1);
         AVLNode *doubleWithLeftChild(AVLNode* &k);
         AVLNode *doubleWithRightChild(AVLNode* &k);
         int height(AVLNode* t);
         AVLNode *getRoot();
-        AVLTree getStructure();
         void *setRoot(AVLNode* r);
 
         bool search(int page, string &searchWord, AVLNode *k);

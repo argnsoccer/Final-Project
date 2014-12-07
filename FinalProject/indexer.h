@@ -1,6 +1,7 @@
 #ifndef INDEXER_H
 #define INDEXER_H
 #include <string>
+#include <vector>
 #include "pages.h"
 
 class Indexer
@@ -13,7 +14,7 @@ public:
     virtual void load() = 0;
     virtual void appendFile() =0;
     virtual void clearIndex() = 0;
-    virtual Pages searchFile(std::string& word) = 0;
+    virtual std::vector<Pages> searchFile(std::string& word, std::vector<Pages> pages) = 0;
 
 private:
 

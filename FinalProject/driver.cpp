@@ -84,7 +84,8 @@ Driver::Driver(char *fileName)
             cin >> inputCommand;
             if(inputCommand == 1)
             {
-                //query.run();
+                pages = p.getPages();
+                q.run(i, pages);
             }
             else
             {

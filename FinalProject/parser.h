@@ -22,25 +22,32 @@ class Parser
 {
 public:
     Parser();
-    ~Parser(){delete AVLindex;}
+    ~Parser(){delete AVLIndex;}
     void prepWord(string &word);
     bool removeStopWords(string &word);
     void relevancyRanking();
-    vector<Pages> getPageObject();
+    vector<Pages> getPages();
     AVLTree* parse(char *fileName);
+    int getWordCount();
 
 private:
+    int wordCount;
     file<> *inputFile;
     xml_node<> *curNode;
-    AVLTree* AVLindex;
+    AVLTree* AVLIndex;
     vector<Pages> pages;
     Pages webPage;
 
 };
 
-inline vector<Pages> Parser::getPageObject()
+inline vector<Pages> Parser::getPages()
 {
     return pages;
+}
+
+inline int Parser::getWordCount()
+{
+    return wordCount;
 }
 
 #endif // PARSER_H
