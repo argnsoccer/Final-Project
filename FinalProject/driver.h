@@ -5,6 +5,7 @@
 #include "query.h"
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 using namespace std;
 
@@ -19,6 +20,7 @@ private:
     Indexer* i;
     Query q;
     vector<Pages> pages;
+    vector<Pages> pageSaver;
 
 };
 
