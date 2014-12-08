@@ -160,43 +160,50 @@ void AVLTree::loadFromFile(ifstream& AVLLoader)
     }
 }
 
-vector<Pages> AVLTree::searchFile(string &word, vector<Pages> pages)
+vector<Pages> AVLTree::searchFile(string &word, vector<Pages>& pages)
 {
     cout << "in searchFile" << endl;
+    cout << "word: " << word << endl;
     return searchFileHelper(word, root, pages);
 }
 
-vector<Pages> AVLTree::searchFileHelper(string &word, AVLNode *root, vector<Pages> pages)
+vector<Pages> AVLTree::searchFileHelper(string &word, AVLNode *root, vector<Pages>& pages)
 {
     vector<Pages> resultPages;
     Pages page;
     if(root == nullptr)
     {
+        cout << "Root is NULL!!" << endl;
         return resultPages;
     }
     if(word < root->word)
     {
-        searchFileHelper(word, root->left, pages);
+        cout << "going left" << endl;
+        resultPages = searchFileHelper(word, root->left, pages);
     }
     else if(word > root->word)
     {
-        searchFileHelper(word, root->right, pages);
+        cout << "going right" << endl;
+        resultPages = searchFileHelper(word, root->right, pages);
     }
     else if(word == root->word)
     {
+        cout << "pages Size: " << pages.size() << endl;
         for(int i = 0; i < pages.size(); ++i)
         {
             page = pages.at(i);
             for(int j = 0; j < root->pages.size(); ++j)
             {
+                cout << "page: " << page.getPage() << endl;
                 if(root->pages.at(j) == page.getPage())
                 {
+                    cout << "root->page: " << root->pages.at(j);
                     resultPages.push_back(page);
                 }
             }
         }
+        return resultPages;
     }
-    return resultPages;
 }
 
 AVLTree::AVLNode* AVLTree::insert(string& word, int page, AVLNode* t)//change the root actually

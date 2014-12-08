@@ -85,6 +85,7 @@ Driver::Driver(char *fileName)
             if(inputCommand == 1)
             {
                 pages = p.getPages();
+                cout << "page Size 102319023912: " << pages.size() << endl;
                 q.run(i, pages);
             }
             else

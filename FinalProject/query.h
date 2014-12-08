@@ -4,6 +4,10 @@
 #include <iostream>
 #include <cstring>
 #include <vector>
+#include <set>
+#include <algorithm>
+#include <cctype>
+#include <functional>
 
 #include "indexer.h"
 using namespace std;
@@ -13,6 +17,7 @@ class Query
 public:
     Query();
     void run(Indexer *i, vector<Pages> &pages);
+    bool removeStopWords(string& word);
 
 private:
     string str;
@@ -20,7 +25,7 @@ private:
     bool checkSingleWord(string temp);
     bool checkOpp(string temp);
     string getNextWord();
-    void getSearchWords();
+    bool getSearchWords();
 
 };
 

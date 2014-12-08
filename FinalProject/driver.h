@@ -2,7 +2,9 @@
 #define DRIVER_H
 #include "parser.h"
 #include "indexer.h"
+#include "query.h"
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -15,6 +17,8 @@ public:
 private:
     Parser p;
     Indexer* i;
+    Query q;
+    vector<Pages> pages;
 
 };
 

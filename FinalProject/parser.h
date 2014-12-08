@@ -4,7 +4,6 @@
 #include "rapidxml_utils.hpp"
 #include "stemmer.h"
 #include "AVLTree.h"
-#include "pages.h"
 #include <string>
 #include <iostream>
 #include <cstring>
@@ -22,7 +21,7 @@ class Parser
 {
 public:
     Parser();
-    ~Parser(){delete AVLIndex;}
+    ~Parser(){}
     void prepWord(string &word);
     bool removeStopWords(string &word);
     void relevancyRanking();
