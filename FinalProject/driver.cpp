@@ -96,7 +96,6 @@ Driver::Driver(char *fileName)
                  // Is it safe to read a whole array of structures directly into the vector?
                 is.read((char*)&pages[0], size2 * sizeof(Pages));
                 is.close();
-                load = false;
             }
             cout << "Would you like to enter a query?" << endl;
             cout << "1: Yes\nAny other number to stop searching" << endl;
@@ -104,7 +103,7 @@ Driver::Driver(char *fileName)
             if(inputCommand == 1)
             {
 
-                if(load = false)
+                if(load == true)
                 {
                     cout << "page Size1: " << pages.size() << endl;
                     q.run(i, pages);
