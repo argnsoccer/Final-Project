@@ -16,6 +16,8 @@ Driver::Driver(char *fileName)
             cout << "Index has been parsed" << endl;
             i->save();
             pageSaver = p.getPages();
+
+            //save to file
             ofstream os;
             os.open("pagesSaver.txt");
             os << pageSaver.size() << endl;
@@ -99,8 +101,6 @@ Driver::Driver(char *fileName)
             is.get();//gets the '\n'
             buffer = new string[pageNum];
             buffer1 = new string[pageNum];
-//            string buffy[50];
-//            string buffy1[50];
             if(load == true)
             {
                 cout << "Index loading into AVLTree for you. Please Wait." << endl;
@@ -146,12 +146,8 @@ Driver::Driver(char *fileName)
 
                 if(load == true)
                 {
-                    for(int i = 0; i < pages.size(); ++i)
-                    {
-                        papel = pages.at(i);
-                    }
                     q.run(i, pages);
-                    pages.clear();
+                    pages.clear();//clears pages so user can search again
                 }
                 else
                 {

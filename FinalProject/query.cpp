@@ -5,8 +5,6 @@ using namespace std;
 Query::Query()
 {
 
-
-
 }
 
 void Query::run(Indexer *i, vector<Pages> &pages)
@@ -28,11 +26,10 @@ void Query::run(Indexer *i, vector<Pages> &pages)
     {
         cout << "resultPages size: " << resultPages.size() << endl;
       int size = resultPages.size();
-      for(int i = 1; i < size+1; ++i) //display contents of vector
+      for(int i = 1; i < size+1; ++i) //display titles of result pages
       {
-          cout << "in for" << endl;
           page = resultPages.at(i-1);
-          cout << i << ": " << page.getTitle() << endl;
+          cout << i << ": " << page.getTitle() << endl;//i starts at 1 for ease of input
       }
 
       cout << "Which page would you like to see?" << endl;
@@ -50,31 +47,16 @@ bool Query::getSearchWords()
 {
     cout << "Search: ";
     cin >> str;
-    //getline(cin,str);
 
-//    char * cstr = new char [str.length()+1];
-//    strcpy (cstr, str.c_str());
-
-    str.erase(std::remove_if(str.begin(), str.end(), std::not1(std::ptr_fun(::isalnum))), str.end());
+    str.erase(std::remove_if(str.begin(), str.end(), std::not1(std::ptr_fun(::isalnum))), str.end());//removes non alphanumeric chars
     transform(str.begin(), str.end(), str.begin(), ::tolower);//forces to lowercase
 
     bool stopWord = removeStopWords(str);
 
-    // cstr now contains a c-string copy of str
-
-    /*char * p = strtok (cstr," ");
-    while (p!=0)
-    {
-      words.push_back(p);
-      p = strtok(NULL," ");
-    }
-    cout << "got here" << endl;
-
-    delete[] cstr;*/
     return stopWord;
 }
 
-bool Query::removeStopWords(string& word)
+bool Query::removeStopWords(string& word)//same as in parser.cpp
 {
     ifstream fileReader;
     set<string> StopWords;
@@ -95,7 +77,7 @@ bool Query::removeStopWords(string& word)
     }
 }
 
-bool Query::checkSingleWord(string temp)
+bool Query::checkSingleWord(string temp)//unused, not enough time to implement
 {
     if(temp == "OR" || temp == "AND" || temp == "NOT")
     {

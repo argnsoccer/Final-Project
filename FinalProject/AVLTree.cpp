@@ -10,7 +10,7 @@ AVLTree::AVLTree(AVLTree* index)
     this->root = index->getRoot();
 }
 
-int AVLTree::height(AVLNode *t)
+int AVLTree::height(AVLNode *t)//height checker for alpha
 {
     int temp;
     if(t==nullptr)
@@ -26,7 +26,7 @@ int AVLTree::height(AVLNode *t)
 
 
 
-bool AVLTree::search(int page, string& searchWord, AVLNode *k)
+bool AVLTree::search(int page, string& searchWord, AVLNode *k)//standard AVL search
 {
     if(k == nullptr)
     {
@@ -49,11 +49,10 @@ bool AVLTree::search(int page, string& searchWord, AVLNode *k)
             {
                 k->occurrences.at(i) = k->occurrences.at(i) + 1;//increment occurrences
                 flag = true;
-                //k->getInfo(i);
                 break;
             }
         }
-        if(flag == false)
+        if(flag == false)//track a new page
         {
             k->pages.push_back(page);
             k->occurrences.push_back(1);
@@ -65,18 +64,18 @@ bool AVLTree::search(int page, string& searchWord, AVLNode *k)
 
 void AVLTree::appendFile()
 {
-    cout << "in append file" << endl;
+    cout << "Sorry, no appending today. Functionality coming soon!" << endl;
 }
 
 void AVLTree::clearIndex()
 {
-    clear(root);
+    clear(root);//helper method
     cout << "Index has been cleared." << endl;
 }
 
 void AVLTree::clear(AVLTree::AVLNode* root)
 {
-    AVLTree::AVLNode* temp;
+    AVLTree::AVLNode* temp;//postorder traversal to clear the index
     if(root != nullptr)
     {
         clear(root->left);
@@ -100,15 +99,12 @@ void AVLTree::saveToFile(AVLNode *root, ofstream& AVLSaver)
     if(root != nullptr)
     {
         AVLSaver << root->getWord() << endl;
-        for(int i = 0; i < root->pages.size(); ++i)
+        for(int i = 0; i < root->pages.size(); ++i)//preorder traversal to save index to file
         {
             AVLSaver << root->pages.at(i) << " ";
-            //cout << root->pages.at(i) << " ";
             AVLSaver << root->occurrences.at(i) << " ";
-            //cout << "(" << root->occurrences.at(i) << ") ";
         }
         AVLSaver << endl;
-        //cout << endl;
         saveToFile(root->left, AVLSaver);
         saveToFile(root->right, AVLSaver);
     }
@@ -125,7 +121,7 @@ void AVLTree::loadFromFile(ifstream& AVLLoader)
     vector<int> tempPages;
     vector<int> tempOcc;
     string word; int page, temp;
-    while(!AVLLoader.eof())
+    while(!AVLLoader.eof())//reads through the file to write
     {
         int wordCheck = 0;
         char peek = AVLLoader.peek();
@@ -138,7 +134,7 @@ void AVLTree::loadFromFile(ifstream& AVLLoader)
             }
             AVLLoader >> page;
             tempPages.push_back(page);
-            tempPages.shrink_to_fit();
+            tempPages.shrink_to_fit();//keeps the vector small
             AVLLoader.get();//gets the ' '
             AVLLoader >> temp;
             tempOcc.push_back(temp);
@@ -153,7 +149,7 @@ void AVLTree::loadFromFile(ifstream& AVLLoader)
         }
         AVLLoader.get();//gets the \n
         root = insert(word, root, tempPages, tempOcc);
-        tempPages.clear();
+        tempPages.clear();//designed to speed up load
         tempPages.shrink_to_fit();
         tempOcc.clear();
         tempOcc.shrink_to_fit();
@@ -162,8 +158,6 @@ void AVLTree::loadFromFile(ifstream& AVLLoader)
 
 vector<Pages> AVLTree::searchFile(string &word, vector<Pages>& pages)
 {
-    cout << "in searchFile" << endl;
-    cout << "word: " << word << endl;
     return searchFileHelper(word, root, pages);
 }
 
@@ -189,21 +183,15 @@ vector<Pages> AVLTree::searchFileHelper(string &word, AVLNode *root, vector<Page
         int size = pages.size();
         for(int i = 0; i < size; ++i)
         {
-            page = pages.at(i);
-            cout << "page Size 5000: " << pages.size() << endl;
-            cout << i << endl;
+            page = pages.at(i);//sets page object to every page object in vector
             int size2 = root->pages.size();
             for(int j = 0; j < size2; ++j)
             {
-//                cout << "Title: " << page.getTitle() << endl;
-//                cout << "Page: " << page.getPage() << endl;
-//                cout << "Text: " << page.getText() << endl;
-                if(root->pages.at(j) == page.getPage())
+                if(root->pages.at(j) == page.getPage())//if the word is on any of the pages
                 {
                     Pages temp = page;
-                    cout << "here" << endl;
 
-                    resultPages.push_back(page);
+                    resultPages.push_back(page);//push to result pages vector to return
                     temp = resultPages.at(j);
                 }
             }
@@ -244,6 +232,7 @@ AVLTree::AVLNode* AVLTree::insert(string& word, int page, AVLNode* t)//change th
     return t;
 }
 
+//separate insert function for loading vs. parsing/saving
 AVLTree::AVLNode* AVLTree::insert(string& word, AVLNode* t, vector<int> &pages, vector<int> &occurrences)//change the root actually
 {
     if(t==nullptr)

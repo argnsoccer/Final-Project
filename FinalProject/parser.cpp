@@ -10,14 +10,13 @@ AVLTree *Parser::parse(char *fileName)
 {
     xml_document<> doc;
     inputFile = new file<>(fileName);
-    doc.parse<0>((*inputFile).data());
+    doc.parse<0>((*inputFile).data());//creates the DOM tree
     char* start;
     char* endWord;
     char* pageStart;
     bool stopWord;
     curNode = doc.first_node()->first_node("page");//goes to first <page> marking
     xml_node<>* titleNode;
-//    Index = new AVLTree();
     AVLIndex = new AVLTree();
     int page = 1;
     int stemEnd;
@@ -47,7 +46,6 @@ AVLTree *Parser::parse(char *fileName)
                 if(hasWord == false)
                 {
                     AVLIndex->setRoot(AVLIndex->insert(inputWord, page, AVLIndex->getRoot()));
-                    //cout << "inputWord: " << inputWord << endl;
                 }
             }
         }
@@ -57,6 +55,7 @@ AVLTree *Parser::parse(char *fileName)
         webPage.setTitle(titleNode->value());
         pages.push_back(webPage);//adds the page to the vector of pages
         page++;
+        cout << page << endl;//poor man's loading bar
     }
     return AVLIndex;
 }
@@ -69,10 +68,10 @@ bool Parser::removeStopWords(string& word)
     fileReader.open("stopwords_en.txt");
     while(fileReader.eof() == false)
     {
-        getline(fileReader,temp);
+        getline(fileReader,temp);//puts all the stop words in a set
         StopWords.insert(temp);
     }
-    if(StopWords.find(word) == StopWords.end())
+    if(StopWords.find(word) == StopWords.end())//checks if set contains word (if stop word)
     {
         return false;
     }
@@ -84,7 +83,7 @@ bool Parser::removeStopWords(string& word)
 
 void Parser::prepWord(string &word)
 {
-    word.erase(std::remove_if(word.begin(), word.end(), std::not1(std::ptr_fun(::isalnum))), word.end());
+    word.erase(std::remove_if(word.begin(), word.end(), std::not1(std::ptr_fun(::isalnum))), word.end());//removes non alphanumeric chars
     transform(word.begin(), word.end(), word.begin(), ::tolower);//forces to lowercase
 }
 
