@@ -25,9 +25,9 @@ Driver::Driver(char *fileName)
 
                 os << papel.getPage() << endl;
 
-                os << papel.getText();
+                os << papel.getText() << '\0';
 
-                os << papel.getTitle();
+                os << papel.getTitle() << '\0';
                 os << endl;
             }
 
@@ -97,8 +97,10 @@ Driver::Driver(char *fileName)
             int pageNum=0;
             is >> pageNum;
             is.get();//gets the '\n'
-            string buffer[pageNum];
-            string buffer1[pageNum];
+            buffer = new string[pageNum];
+            buffer1 = new string[pageNum];
+//            string buffy[50];
+//            string buffy1[50];
             if(load == true)
             {
                 cout << "Index loading into AVLTree for you. Please Wait." << endl;
@@ -113,20 +115,20 @@ Driver::Driver(char *fileName)
                 char*buf1;
                 int count=0;
 
-                while(is.peek()!= '\n')
+                while(is.peek()!= '\n')//loads the Pages
                 {
 
                     is >> p1;
                     page.setPage(p1);
                     is.get();//gets the '\n'
                     getline(is, buffer[count], '\0');
-                    //cout << "buffer: " << buffer <<endl;
                     buf = const_cast<char*>(buffer[count].c_str());
                     page.setText(buf);
                     getline(is, buffer1[count], '\0');
                     buf1 = const_cast<char*>(buffer1[count].c_str());
                     page.setTitle(buf1);
                     pages.push_back(page);
+                    is.get();//gets the '\n'
                     if(is.peek()== -1)
                     {
                         break;

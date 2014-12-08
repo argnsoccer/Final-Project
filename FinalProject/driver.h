@@ -13,7 +13,7 @@ class Driver
 {
 public:
     Driver(char* fileName);
-    ~Driver(){delete i;}
+    ~Driver(){delete i, buffer, buffer1;}
 
 private:
     Parser p;
@@ -22,6 +22,8 @@ private:
     vector<Pages> pages;
     vector<Pages> pageSaver;
     Pages papel;
+    string* buffer;
+    string* buffer1;
 
 };
 
