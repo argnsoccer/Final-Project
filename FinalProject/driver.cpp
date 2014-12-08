@@ -15,12 +15,22 @@ Driver::Driver(char *fileName)
             i = new AVLTree(p.parse(fileName));
             cout << "Index has been parsed" << endl;
             i->save();
+            vector<Pages> pageSaver = p.getPages();
+            //code by Peter Alexander http://stackoverflow.com/questions/2469531/reading-and-writing-c-vector-to-a-file
+            ofstream os ("pagesSaver.txt", ios::binary);
+
+            int size1 = pageSaver.size();
+            os.write((const char*)&size1, 4);
+            os.write((const char*)&pageSaver[0], size1 * sizeof(Pages));
+            os.close();
+
             saver = true;
             load = false;
         }
         else if(inputCommand == 2)
         {
             i = new AVLTree();
+
             cout << "You will load from the file." << endl;
             saver = true;
         }
@@ -77,6 +87,15 @@ Driver::Driver(char *fileName)
                 cout << "Index loading into AVLTree for you. Please Wait." << endl;
                 i->load();
                 cout << "Loading complete." << endl;
+                //code by Peter Alexander http://stackoverflow.com/questions/2469531/reading-and-writing-c-vector-to-a-file
+                ifstream is("pagesSaver.txt", ios::binary);
+                int size2;
+                is.read((char*)&size2, 4);
+                pages.resize(size2);
+
+                     // Is it safe to read a whole array of structures directly into the vector?
+                is.read((char*)&pages[0], size2 * sizeof(Pages));
+                is.close();
                 load = false;
             }
             cout << "Would you like to enter a query?" << endl;
@@ -84,7 +103,6 @@ Driver::Driver(char *fileName)
             cin >> inputCommand;
             if(inputCommand == 1)
             {
-                pages = p.getPages();
                 cout << "page Size 102319023912: " << pages.size() << endl;
                 q.run(i, pages);
             }
