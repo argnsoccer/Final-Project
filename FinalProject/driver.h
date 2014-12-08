@@ -21,6 +21,7 @@ private:
     Query q;
     vector<Pages> pages;
     vector<Pages> pageSaver;
+    Pages papel;
 
 };
 

@@ -16,28 +16,22 @@ Driver::Driver(char *fileName)
             cout << "Index has been parsed" << endl;
             i->save();
             pageSaver = p.getPages();
-            Pages papel;
-            //code by Peter Alexander http://stackoverflow.com/questions/2469531/reading-and-writing-c-vector-to-a-file
             ofstream os;
             os.open("pagesSaver.txt");
-
+            os << pageSaver.size() << endl;
             for(int x = 0; x < pageSaver.size(); ++x)
             {
                 papel = pageSaver.at(x);
-                cout << papel.getPage() << endl;
+
                 os << papel.getPage() << endl;
-                cout << papel.getText() << '\0';
-                os << papel.getText() << '\0';
-                cout << papel.getTitle() << '\0';
-                os << papel.getTitle() << '\0';
+
+                os << papel.getText();
+
+                os << papel.getTitle();
+                os << endl;
             }
 
             os.close();
-
-//            int size1 = pageSaver.size();
-//            os.write((const char*)&size1, 4);
-//            os.write((const char*)&pageSaver[0], size1 * sizeof(Pages));
-//            os.close();
 
             saver = true;
             load = false;
@@ -97,36 +91,49 @@ Driver::Driver(char *fileName)
         //Interactive Mode
         case 2:
         {
+            ifstream is;
+
+            is.open("pagesSaver.txt");
+            int pageNum=0;
+            is >> pageNum;
+            is.get();//gets the '\n'
+            string buffer[pageNum];
+            string buffer1[pageNum];
             if(load == true)
             {
                 cout << "Index loading into AVLTree for you. Please Wait." << endl;
                 i->load();
                 cout << "Loading complete." << endl;
-                //code by Peter Alexander http://stackoverflow.com/questions/2469531/reading-and-writing-c-vector-to-a-file
-                ifstream is;
-                Pages papel;
-                is.open("pagesSaver.txt");
+
+
                 int p1;
-                char* buffer;
-                while(!is.eof())
+
+                Pages page;
+                char*buf;
+                char*buf1;
+                int count=0;
+
+                while(is.peek()!= '\n')
                 {
+
                     is >> p1;
-                    papel.setPage(p1);
+                    page.setPage(p1);
                     is.get();//gets the '\n'
-                    is.getline(buffer, '\0');
-                    papel.setText(buffer);
-                    is.getline(buffer, '\0');
-                    papel.setTitle(buffer);
-                    pages.push_back(papel);
+                    getline(is, buffer[count], '\0');
+                    //cout << "buffer: " << buffer <<endl;
+                    buf = const_cast<char*>(buffer[count].c_str());
+                    page.setText(buf);
+                    getline(is, buffer1[count], '\0');
+                    buf1 = const_cast<char*>(buffer1[count].c_str());
+                    page.setTitle(buf1);
+                    pages.push_back(page);
+                    if(is.peek()== -1)
+                    {
+                        break;
+                    }
+                    count++;
                 }
 
-
-
-//                int size2;
-//                is.read((char*)&size2, 4);
-//                pages.resize(size2);
-
-//                is.read((char*)&pages[0], size2 * sizeof(Pages));
                 is.close();
             }
             cout << "Would you like to enter a query?" << endl;
@@ -137,20 +144,17 @@ Driver::Driver(char *fileName)
 
                 if(load == true)
                 {
-                    Pages temp;
-                    cout << "page Size1: " << pages.size() << endl;
                     for(int i = 0; i < pages.size(); ++i)
                     {
-                        temp = pages.at(i);
-                        cout << "Page: " << temp.getPage() << endl;
-                        //cout << "Title: " << temp.getTitle() << endl;
+                        papel = pages.at(i);
                     }
                     q.run(i, pages);
+                    pages.clear();
                 }
                 else
                 {
-                    cout << "page Size2: " << pageSaver.size() << endl;
                     q.run(i, pageSaver);
+                    pageSaver.clear();
                 }
             }
             else

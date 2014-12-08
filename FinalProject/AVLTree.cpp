@@ -201,18 +201,10 @@ vector<Pages> AVLTree::searchFileHelper(string &word, AVLNode *root, vector<Page
                 if(root->pages.at(j) == page.getPage())
                 {
                     Pages temp = page;
-                    temp.setPage(page.getPage());
-                    temp.setText(page.getText());
-                    temp.setTitle(page.getTitle());
                     cout << "here" << endl;
 
                     resultPages.push_back(page);
                     temp = resultPages.at(j);
-
-
- //                   cout << "Title: " << temp.getTitle() << endl;
-                    cout << "Page: " << temp.getPage() << endl;
-   //                 cout << "Text: " << temp.getText() << endl;
                 }
             }
         }
