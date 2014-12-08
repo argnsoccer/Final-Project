@@ -10,6 +10,14 @@ class Pages
 public:
     Pages();
     Pages(int page, rapidxml::xml_node<>* node);
+
+    void operator=(const Pages &P)
+    {
+        text = P.text;
+        title = P.title;
+        page = P.page;
+    }
+
     int getPage();
     void setPage(int p);
     rapidxml::xml_node<>* getPageNode();
@@ -18,6 +26,7 @@ public:
     void setText(char *text);
     char *getTitle();
     void setTitle(char *title);
+
 
 
 private:

@@ -16,13 +16,28 @@ Driver::Driver(char *fileName)
             cout << "Index has been parsed" << endl;
             i->save();
             pageSaver = p.getPages();
+            Pages papel;
             //code by Peter Alexander http://stackoverflow.com/questions/2469531/reading-and-writing-c-vector-to-a-file
-            ofstream os ("pagesSaver.txt", ios::binary);
+            ofstream os;
+            os.open("pagesSaver.txt");
 
-            int size1 = pageSaver.size();
-            os.write((const char*)&size1, 4);
-            os.write((const char*)&pageSaver[0], size1 * sizeof(Pages));
+            for(int x = 0; x < pageSaver.size(); ++x)
+            {
+                papel = pageSaver.at(x);
+                cout << papel.getPage() << endl;
+                os << papel.getPage() << endl;
+                cout << papel.getText() << '\0';
+                os << papel.getText() << '\0';
+                cout << papel.getTitle() << '\0';
+                os << papel.getTitle() << '\0';
+            }
+
             os.close();
+
+//            int size1 = pageSaver.size();
+//            os.write((const char*)&size1, 4);
+//            os.write((const char*)&pageSaver[0], size1 * sizeof(Pages));
+//            os.close();
 
             saver = true;
             load = false;
@@ -88,13 +103,30 @@ Driver::Driver(char *fileName)
                 i->load();
                 cout << "Loading complete." << endl;
                 //code by Peter Alexander http://stackoverflow.com/questions/2469531/reading-and-writing-c-vector-to-a-file
-                ifstream is("pagesSaver.txt", ios::binary);
-                int size2;
-                is.read((char*)&size2, 4);
-                pages.resize(size2);
+                ifstream is;
+                Pages papel;
+                is.open("pagesSaver.txt");
+                int p1;
+                char* buffer;
+                while(!is.eof())
+                {
+                    is >> p1;
+                    papel.setPage(p1);
+                    is.get();//gets the '\n'
+                    is.getline(buffer, '\0');
+                    papel.setText(buffer);
+                    is.getline(buffer, '\0');
+                    papel.setTitle(buffer);
+                    pages.push_back(papel);
+                }
 
-                 // Is it safe to read a whole array of structures directly into the vector?
-                is.read((char*)&pages[0], size2 * sizeof(Pages));
+
+
+//                int size2;
+//                is.read((char*)&size2, 4);
+//                pages.resize(size2);
+
+//                is.read((char*)&pages[0], size2 * sizeof(Pages));
                 is.close();
             }
             cout << "Would you like to enter a query?" << endl;
@@ -105,7 +137,14 @@ Driver::Driver(char *fileName)
 
                 if(load == true)
                 {
+                    Pages temp;
                     cout << "page Size1: " << pages.size() << endl;
+                    for(int i = 0; i < pages.size(); ++i)
+                    {
+                        temp = pages.at(i);
+                        cout << "Page: " << temp.getPage() << endl;
+                        //cout << "Title: " << temp.getTitle() << endl;
+                    }
                     q.run(i, pages);
                 }
                 else

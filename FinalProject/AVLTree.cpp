@@ -178,32 +178,46 @@ vector<Pages> AVLTree::searchFileHelper(string &word, AVLNode *root, vector<Page
     }
     if(word < root->word)
     {
-        cout << "going left" << endl;
         resultPages = searchFileHelper(word, root->left, pages);
     }
     else if(word > root->word)
     {
-        cout << "going right" << endl;
         resultPages = searchFileHelper(word, root->right, pages);
     }
     else if(word == root->word)
     {
-        cout << "pages Size: " << pages.size() << endl;
-        for(int i = 0; i < pages.size(); ++i)
+        int size = pages.size();
+        for(int i = 0; i < size; ++i)
         {
             page = pages.at(i);
-            for(int j = 0; j < root->pages.size(); ++j)
+            cout << "page Size 5000: " << pages.size() << endl;
+            cout << i << endl;
+            int size2 = root->pages.size();
+            for(int j = 0; j < size2; ++j)
             {
-                cout << "page: " << page.getPage() << endl;
+//                cout << "Title: " << page.getTitle() << endl;
+//                cout << "Page: " << page.getPage() << endl;
+//                cout << "Text: " << page.getText() << endl;
                 if(root->pages.at(j) == page.getPage())
                 {
-                    cout << "root->page: " << root->pages.at(j);
+                    Pages temp = page;
+                    temp.setPage(page.getPage());
+                    temp.setText(page.getText());
+                    temp.setTitle(page.getTitle());
+                    cout << "here" << endl;
+
                     resultPages.push_back(page);
+                    temp = resultPages.at(j);
+
+
+ //                   cout << "Title: " << temp.getTitle() << endl;
+                    cout << "Page: " << temp.getPage() << endl;
+   //                 cout << "Text: " << temp.getText() << endl;
                 }
             }
         }
-        return resultPages;
     }
+    return resultPages;
 }
 
 AVLTree::AVLNode* AVLTree::insert(string& word, int page, AVLNode* t)//change the root actually

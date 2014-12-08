@@ -14,7 +14,7 @@ public:
     virtual void load() = 0;
     virtual void appendFile() =0;
     virtual void clearIndex() = 0;
-    virtual std::vector<Pages> searchFile(std::string& word, std::vector<Pages> pages) = 0;
+    virtual std::vector<Pages> searchFile(std::string& word, std::vector<Pages>& pages) = 0;
 
 private:
 

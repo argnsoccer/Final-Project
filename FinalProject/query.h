@@ -16,6 +16,7 @@ class Query
 {
 public:
     Query();
+
     void run(Indexer *i, vector<Pages> &pages);
     bool removeStopWords(string& word);
 

@@ -52,10 +52,8 @@ AVLTree *Parser::parse(char *fileName)
             }
         }
         curNode = curNode->next_sibling("page");
-        char pageText[strlen(pageStart)+1];
-        strcpy(pageText, pageStart);//creates a char* of all the text in one page
         webPage.setPage(page);//sets page number
-        webPage.setText(pageText);//sets the pageText
+        webPage.setText(pageStart);//sets the pageText
         webPage.setTitle(titleNode->value());
         pages.push_back(webPage);//adds the page to the vector of pages
         page++;
@@ -109,14 +107,3 @@ void Parser::prepWord(string &word)
 
 
 
-
-//IndexInterface
-//virtual ~IndexInterface();
-//virtual void addToIndex(string&, int) = 0;
-//virtual void removeFromIndex(string&) = 0;
-//virtual vector<int> search(string&) = 0;
-//virtual bool contains(string&) = 0;
-//virtual vector<Data <string, int> >* save() = 0;
-//virtual void load(vector<Data<string, int> >&) = 0;
-//virtual void printReverseFileIndex() = 0;
-//virtual void deleteIndexes() = 0;

@@ -12,10 +12,8 @@ Query::Query()
 void Query::run(Indexer *i, vector<Pages> &pages)
 {
     //cout << "page Size 0: " << pages.size() << endl;
-    getSearchWords();
     vector<Pages> resultPages;
-    Pages page;
-    if(removeStopWords(str) == false)//remove stop words and stem then search
+    if(getSearchWords() == false)//remove stop words and stem then search
     {
         char* buffer = const_cast<char*>(str.c_str());
         int len = str.length()-1;
@@ -25,17 +23,22 @@ void Query::run(Indexer *i, vector<Pages> &pages)
         resultPages = i->searchFile(str, pages);
     }
 
+    Pages page;
     if(resultPages.size() > 0)
     {
-      for(int i = 0; i < resultPages.size(); i++) //display contents of vector
+        cout << "resultPages size: " << resultPages.size() << endl;
+      int size = resultPages.size();
+      for(int i = 1; i < size+1; ++i) //display contents of vector
       {
-          page = resultPages.at(i);
+          cout << "in for" << endl;
+          page = resultPages.at(i-1);
           cout << i << ": " << page.getTitle() << endl;
       }
+
       cout << "Which page would you like to see?" << endl;
       int command;
       cin >> command;
-      page = resultPages.at(command);
+      page = resultPages.at(command-1);
       cout << page.getText() << endl;
     }
     else
@@ -45,7 +48,7 @@ void Query::run(Indexer *i, vector<Pages> &pages)
 
 bool Query::getSearchWords()
 {
-    cout << "enter shit here: ";
+    cout << "Search: ";
     cin >> str;
     //getline(cin,str);
 
@@ -56,8 +59,6 @@ bool Query::getSearchWords()
     transform(str.begin(), str.end(), str.begin(), ::tolower);//forces to lowercase
 
     bool stopWord = removeStopWords(str);
-
-
 
     // cstr now contains a c-string copy of str
 

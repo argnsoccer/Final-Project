@@ -21,7 +21,7 @@ class Parser
 {
 public:
     Parser();
-    ~Parser(){}
+    ~Parser(){delete AVLIndex;}
     void prepWord(string &word);
     bool removeStopWords(string &word);
     void relevancyRanking();
